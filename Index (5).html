@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pembelajaran Digital SMA S Al Kautsar - Limit Fungsi</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#1e293b;--mut:#64748b;--pri:#0f766e;--pri2:#14b8a6;--acc:#f59e0b;--ok:#16a34a;--bad:#dc2626;--line:#e2e8f0;--side:#0f2a3d}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+#side{position:fixed;inset:0 auto 0 0;width:290px;background:var(--side);color:#cbd5e1;overflow-y:auto;z-index:30;transition:transform .25s;padding:18px 0}
+#side h1{font-size:1.1rem;color:#fff;margin:0 18px 4px}
+#side .sub{font-size:.8rem;margin:0 18px 12px;color:#7dd3c8}
+#bar{height:6px;background:#1e3a52;margin:0 18px 12px;border-radius:9px;overflow:hidden}
+#bar i{display:block;height:100%;width:0;background:var(--pri2);transition:width .3s}
+.grp{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#7dd3c8;margin:14px 18px 4px;font-weight:800}
+#side a{display:block;padding:7px 18px;color:#cbd5e1;text-decoration:none;font-size:.88rem;border-left:4px solid transparent;cursor:pointer}
+#side a:hover{background:#17405a}
+#side a.on{background:#17405a;color:#fff;border-left-color:var(--acc);font-weight:700}
+#top{display:none;position:sticky;top:0;z-index:20;background:var(--pri);color:#fff;padding:10px 14px;align-items:center;gap:12px;font-weight:800}
+#top button{background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer}
+#ov{display:none;position:fixed;inset:0;background:#0006;z-index:25}
+main{margin-left:290px;padding:28px 34px 60px;max-width:1000px}
+.card{background:var(--card);border-radius:16px;padding:24px 28px;box-shadow:0 2px 10px #0f172a12;border:1px solid var(--line)}
+.tag{display:inline-block;background:#ccfbf1;color:var(--pri);font-weight:800;font-size:.78rem;padding:2px 12px;border-radius:99px}
+h2{margin:.4em 0 .6em;color:var(--pri);font-size:1.6rem;line-height:1.3}
+h3{color:#0b4f6c;margin:1.2em 0 .3em}
+.def,.thm,.note,.ex{border-radius:12px;padding:12px 18px;margin:14px 0}
+.def{background:#ecfeff;border-left:5px solid #06b6d4}
+.thm{background:#fef9c3;border-left:5px solid var(--acc)}
+.note{background:#f1f5f9;border-left:5px solid #94a3b8}
+.ex{background:#f0fdf4;border-left:5px solid var(--ok)}
+.def b.t,.thm b.t,.ex b.t{display:block;margin-bottom:2px}
+ul,ol{padding-left:22px}
+table{border-collapse:collapse;margin:10px 0;max-width:100%}
+td,th{border:1px solid var(--line);padding:6px 12px;text-align:center}
+th{background:#e0f2f1}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer}
+.btn:hover{background:#0d5f58}
+.btn.alt{background:#e2e8f0;color:var(--ink)}
+.btn.warn{background:var(--acc);color:#1e293b}
+.btn:disabled{opacity:.4;cursor:default}
+.sol{display:none;margin-top:10px;background:#fff;border:1px dashed var(--pri2);border-radius:12px;padding:10px 18px}
+.sol.show{display:block}
+.q{border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:14px 0;background:#fff}
+.q.ok{border-color:var(--ok);background:#f0fdf4}
+.q.no{border-color:var(--bad);background:#fef2f2}
+.opt{display:block;padding:7px 12px;margin:5px 0;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff}
+.opt:hover{background:#f0fdfa}
+.q input[type=text]{padding:8px 12px;border:2px solid var(--line);border-radius:10px;font:inherit;width:200px;max-width:100%}
+.fb{display:none;margin-top:8px;font-size:.93rem}
+.q.ok .fb,.q.no .fb{display:block}
+.score{font-size:1.3rem;font-weight:800;padding:14px;border-radius:12px;background:#ccfbf1;margin-top:14px;display:none}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+@media(max-width:860px){
+ #side{transform:translateX(-100%);width:270px}
+ #side.open{transform:none}
+ #ov.open{display:block}
+ #top{display:flex}
+ main{margin-left:0;padding:14px 12px 50px}
+ .card{padding:16px}
+ h2{font-size:1.3rem}
+}
+
+/* ---- Judul, watermark, responsif otomatis ---- */
+body{font-size:clamp(15px,.85rem + .3vw,17.5px);-webkit-text-size-adjust:100%}
+#wm{position:fixed;inset:0;pointer-events:none;z-index:5;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='220'%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' font-family='Nunito,Arial,sans-serif' font-weight='800' font-size='23' fill='%230f766e' fill-opacity='.09' transform='rotate(-25 170 110)'%3EUnggul, Islami Global%3C/text%3E%3C/svg%3E");
+ background-repeat:repeat}
+#hero{display:flex;align-items:center;gap:16px;background:linear-gradient(120deg,#0f766e,#0e7490 60%,#0f2a3d);color:#fff;border-radius:18px;padding:18px 24px;margin-bottom:18px;box-shadow:0 6px 18px #0f766e33;flex-wrap:wrap}
+#hero .logo{width:56px;height:56px;border-radius:16px;background:#ffffff26;display:grid;place-items:center;font-size:1.9rem}
+#hero .ht{flex:1;min-width:200px}
+#hero small{letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:#99f6e4;font-size:.75rem}
+#hero h1{margin:0;font-size:clamp(1.3rem,1rem + 1.6vw,2rem);line-height:1.2}
+#hero .sub2{font-size:.9rem;opacity:.9}
+#hero .chip{background:var(--acc);color:#1e293b;font-weight:800;border-radius:99px;padding:6px 16px;font-size:.88rem}
+#foot{text-align:center;color:var(--mut);font-size:.82rem;margin-top:22px}
+#side h1{line-height:1.3}
+.btn,#side a,.opt{min-height:40px}
+@media(min-width:861px) and (max-width:1180px){
+ #side{width:240px}
+ main{margin-left:240px;padding:22px 20px 50px}
+}
+@media(max-width:860px){
+ #hero{padding:12px 14px;gap:10px;border-radius:14px}
+ #hero .logo{width:42px;height:42px;font-size:1.4rem;border-radius:12px}
+ #hero .chip{font-size:.78rem;padding:4px 12px}
+ .btn{padding:10px 14px}
+ .nav .btn{flex:1}
+ #top{padding-top:calc(10px + env(safe-area-inset-top))}
+ #side{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+ #wm{background-size:260px 170px}
+}
+@media(max-width:480px){
+ #hero .ht{min-width:140px}
+ .q input[type=text]{width:100%}
+ td,th{padding:4px 7px;font-size:.9rem}
+}
+@media(min-width:1500px){main{max-width:1150px}}
+@media print{#side,#top,#ov,.nav{display:none!important}main{margin:0}}
+
+.logo{overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;border-radius:inherit}
+#top img.tb{height:30px;width:30px;object-fit:contain;background:#fff;border-radius:8px;padding:2px}
+.slogo{width:64px;height:64px;margin:0 18px 8px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:2rem;overflow:hidden}
+.slogo img{width:100%;height:100%;object-fit:contain;padding:4px}
+
+/* ---- Logo tampil utuh (tanpa terpotong) ---- */
+#hero .logo{width:auto;height:auto;min-width:56px;min-height:56px;padding:6px 10px;display:flex;align-items:center;justify-content:center;overflow:visible;background:#fff;border-radius:14px;box-shadow:0 2px 8px #0003}
+#hero .logo img{width:auto;height:64px;max-width:200px;padding:0;background:none;border-radius:0;object-fit:contain;display:block}
+#hero .logo img[style*="display: none"]{display:none}
+.slogo{width:auto;max-width:calc(100% - 36px);height:auto;min-height:64px;padding:6px 12px;display:flex;overflow:visible}
+.slogo img{width:auto;height:64px;max-width:100%;padding:0;object-fit:contain}
+#top img.tb{width:auto;height:32px;max-width:70px;padding:3px 5px;object-fit:contain}
+@media(max-width:860px){
+ #hero .logo{min-width:44px;min-height:44px;padding:4px 8px;border-radius:12px}
+ #hero .logo img{height:46px;max-width:120px}
+}
+select{padding:7px 10px;border:2px solid var(--line);border-radius:10px;font:inherit;max-width:100%;background:#fff}
+#qzSet label{font-weight:700}
+.pb{background:#f8fafc;border:1px dashed var(--pri2);border-radius:10px;padding:8px 14px;margin-top:8px;line-height:1.75}
+.pb ol{margin:4px 0 8px}
+.pb li{margin:3px 0}
+
+/* ===== Tampilan modern ===== */
+:root{--bg:#f2f7f6;--pri:#0f766e;--pri2:#14b8a6;--gold:#d4a017;--acc:#f5b301;--ink:#0f2a2e;--mut:#5b7075;--line:#dce8e6;--side:#0a2e33;--r:20px}
+body{color:var(--ink);background:radial-gradient(1100px 560px at 100% -10%,#dcf3ee 0,transparent 60%),radial-gradient(900px 500px at -10% 110%,#fbf0d0 0,transparent 55%),var(--bg);background-attachment:fixed}
+h2,h3,#hero h1,#side h1{font-family:'Plus Jakarta Sans','Nunito',sans-serif}
+h2{font-weight:800;letter-spacing:-.01em;background:linear-gradient(90deg,#0f766e,#0e7490);-webkit-background-clip:text;background-clip:text;color:transparent}
+h3{color:#0e5f66}
+#side{background:linear-gradient(180deg,#0a2e33,#0b4046 55%,#0a2e33);box-shadow:4px 0 24px #0a2e3340}
+#side::-webkit-scrollbar,main::-webkit-scrollbar{width:6px}
+#side::-webkit-scrollbar-thumb{background:#ffffff33;border-radius:9px}
+#side a{margin:2px 10px;padding:8px 12px;border-left:0;border-radius:12px;transition:background .15s}
+#side a.on{background:linear-gradient(90deg,#14b8a666,#14b8a620);box-shadow:inset 3px 0 0 var(--acc);color:#fff}
+.grp{color:#fcd34d;margin:16px 18px 4px}
+#bar{background:#ffffff1f}#bar i{background:linear-gradient(90deg,#14b8a6,#fcd34d)}
+.card{border-radius:var(--r);padding:28px 34px;border:1px solid #ffffffcc;box-shadow:0 18px 40px -22px #0f766e66,0 2px 6px #0f172a0d}
+.tag{background:#fff4cc;color:#8a6500;border:1px solid #f6e3a6}
+#hero{position:relative;overflow:hidden;border-radius:24px;padding:22px 28px;box-shadow:0 18px 40px -20px #0a2e33aa;
+ background:radial-gradient(520px 220px at 95% 0,#14b8a655,transparent 70%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.13'%3E%3Crect x='14' y='14' width='36' height='36'/%3E%3Crect x='14' y='14' width='36' height='36' transform='rotate(45 32 32)'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(120deg,#0a2e33,#0f766e 70%,#0e7490)}
+#hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#d4a017,#fcd34d,#d4a017)}
+#hero .bsm{font-size:1.2rem;color:#fde68a;line-height:1.6;font-family:'Amiri','Noto Naskh Arabic','Traditional Arabic',serif}
+#hero .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+#hero .pills span{background:#ffffff1f;border:1px solid #ffffff38;padding:3px 12px;border-radius:99px;font-size:.78rem;font-weight:700}
+#hero .chip{background:linear-gradient(135deg,#f5b301,#fcd34d);box-shadow:0 6px 14px -6px #0006}
+.def,.thm,.note,.ex{border-radius:16px;border-left-width:6px;box-shadow:0 2px 10px #0f172a0a}
+.def b.t::before{content:'📖 '}.thm b.t::before{content:'⭐ '}.ex b.t::before{content:'✏️ '}
+.note::before{content:'💡 '}
+.ctx{background:linear-gradient(135deg,#fff8e1,#fff);border:1px solid #f6e3a6;border-radius:16px;padding:12px 16px;margin:10px 0 14px;font-size:.93rem;color:#5a4500}
+table{border-radius:12px}td,th{border-color:#e3efed}
+th{background:linear-gradient(180deg,#e6f6f3,#d4efe9);color:#0e5f66}
+tr:nth-child(even) td{background:#f7fbfa}
+.btn{background:linear-gradient(135deg,#0f766e,#14b8a6);border-radius:12px;box-shadow:0 8px 16px -8px #0f766e;transition:transform .15s,filter .15s}
+.btn:hover{background:linear-gradient(135deg,#0f766e,#14b8a6);transform:translateY(-1px);filter:brightness(1.06)}
+.btn.alt{background:#eaf2f1;color:var(--ink);box-shadow:none}.btn.alt:hover{background:#dcebe9}
+.btn.warn{background:linear-gradient(135deg,#f5b301,#fcd34d);color:#3b2a00}
+.q{border-radius:18px;box-shadow:0 2px 12px #0f172a0a}
+#qzSet{background:linear-gradient(135deg,#f0fdfa,#fffdf5)}
+.opt{border-radius:12px;transition:all .12s}
+.opt:has(input:checked){border-color:var(--pri);background:#ecfdf5;box-shadow:0 0 0 2px #14b8a640}
+select,.q input[type=text]{border-radius:12px}
+select:focus,.q input[type=text]:focus{outline:0;border-color:var(--pri2);box-shadow:0 0 0 3px #14b8a633}
+.score{background:linear-gradient(135deg,#0f766e,#0e7490);color:#fff;border-radius:16px}
+.sol{border-radius:14px;background:#f8fffd}
+::selection{background:#fde68a}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#view.fade{animation:up .35s ease}
+@media(max-width:860px){
+ #top{background:linear-gradient(90deg,#0a2e33,#0f766e);box-shadow:0 4px 14px #0a2e3355}
+ .card{padding:18px 16px;border-radius:18px}
+ #hero{padding:14px 16px;border-radius:18px}
+ #hero .bsm{font-size:1rem}
+ #hero .pills span{font-size:.72rem;padding:2px 9px}
+}
+#foot{border-top:1px solid var(--line);padding-top:16px;margin-top:28px;line-height:1.6}
+#foot .fl{font-size:.85rem;color:var(--ink)}
+#foot .fc{font-weight:700;color:var(--pri);font-size:.85rem}
+#foot .fn{font-size:.75rem;color:var(--mut)}
+
+/* ---- Visualisasi bergerak ---- */
+.viz{border:1px solid #bfe7e0;background:linear-gradient(180deg,#f3fcfa,#fff);border-radius:18px;padding:12px 14px;margin:14px 0 18px;box-shadow:0 10px 24px -18px #0f766e}
+.viz .vt{font-weight:800;color:#0e5f66;margin-bottom:8px}
+.viz canvas{width:100%;display:block;border-radius:12px;border:1px solid var(--line);background:#fff}
+.vc{display:flex;align-items:center;gap:12px;margin:10px 0 6px}
+.vc .btn{padding:8px 14px;min-width:108px;white-space:nowrap}
+.vsl{flex:1;min-width:0;accent-color:var(--pri)}
+.vl{font-size:.78rem;color:var(--mut);font-weight:700;white-space:nowrap}
+.vr{background:#0f2a2e;color:#e6fffb;border-radius:12px;padding:8px 12px;font-size:.85rem;font-family:ui-monospace,Menlo,Consolas,monospace;line-height:1.6;min-height:3.4em;overflow-x:auto}
+.vd{font-size:.92rem;color:#334155;margin-top:8px;line-height:1.65}
+@media(max-width:480px){.vl{display:none}.vr{font-size:.78rem}.vc .btn{min-width:96px}}
+@media print{.viz .vc{display:none}}
+
+/* ---- Header sidebar: logo + teks sejajar ---- */
+.shead{display:flex;align-items:center;gap:12px;margin:0 12px 14px;padding:10px 12px;background:#fff;border-radius:16px;box-shadow:0 6px 16px -8px #0006}
+#side .slogo{width:auto;max-width:none;min-height:0;height:auto;margin:0;padding:0;background:none;border-radius:0;flex:0 0 auto;display:flex;align-items:center}
+#side .slogo img{height:56px;width:auto;max-width:72px;padding:0;object-fit:contain}
+#side .stx{min-width:0}
+#side .stx h1{margin:0;font-size:.92rem;line-height:1.3;color:#0f2a2e}
+#side .stx .sub{margin:3px 0 0;font-size:.72rem;line-height:1.35;color:#0f766e;font-weight:700}
+</style>
+</head>
+<body>
+<div id="top"><button onclick="toggleSide()" aria-label="Menu">&#9776;</button><img class="lgimg tb" alt="Logo SMA S Al Kautsar" style="display:none" onerror="logoFail()"><span>Pembelajaran Digital SMA S Al Kautsar</span></div>
+<div id="ov" onclick="toggleSide()"></div>
+<nav id="side"></nav>
+<div id="wm" aria-hidden="true"></div>
+<main>
+ <header id="hero">
+  <div class="hl"><div class="logo"><img class="lgimg" alt="Logo SMA S Al Kautsar" style="display:none" onerror="logoFail()"><span class="lgfb">📐</span></div></div>
+  <div class="ht">
+   <div class="bsm">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ</div>
+   <small>Pembelajaran Digital</small>
+   <h1>SMA S Al Kautsar</h1>
+   <div class="sub2">Matematika · Limit Fungsi</div>
+   <div class="pills"><span>📚 Materi Lengkap</span><span>🎯 Latihan Level UN</span><span>📱 Nyaman di HP &amp; PC</span></div>
+  </div>
+  <div class="chip">Unggul, Islami Global</div>
+ </header>
+ <div id="view" class="card"></div>
+ <footer id="foot">
+  <div class="fl">Pembelajaran Digital SMA S Al Kautsar &middot; <b>Unggul, Islami Global</b></div>
+  <div class="fc">&copy; <span id="yr">2026</span> SMA S Al Kautsar. Hak Cipta Dilindungi Undang-Undang.</div>
+  <div class="fn">Seluruh materi, soal, dan tampilan dalam media ini tidak boleh disalin atau diperbanyak tanpa izin.</div>
+ </footer>
+</main>
+
+<script>
+/* ============ DATA MATERI ============ */
+const S = [];
+const add = (g, id, t, h) => S.push({g, id, t, h});
+
+/* ---------- A. ALJABAR ---------- */
+add('A. Limit Fungsi Aljabar','a1','1. Pengertian Limit Fungsi di Satu Titik',String.raw`
+<p>Limit menjelaskan <b>nilai yang didekati</b> oleh \(f(x)\) ketika \(x\) mendekati suatu titik \(c\), tanpa harus sama dengan \(x=c\).</p>
+<div class="def"><b class="t">Definisi</b>\(\displaystyle\lim_{x\to c} f(x)=L\) artinya nilai \(f(x)\) mendekati \(L\) ketika \(x\) mendekati \(c\) dari kiri maupun kanan. Limit ada jika
+\[\lim_{x\to c^-}f(x)=\lim_{x\to c^+}f(x)=L.\]</div>
+<h3>Contoh: pendekatan numerik</h3>
+<p>Untuk \(f(x)=\dfrac{x^2-1}{x-1}\), fungsi tidak terdefinisi di \(x=1\). Perhatikan tabel:</p>
+<table><tr><th>\(x\)</th><td>0,9</td><td>0,99</td><td>0,999</td><td>1,001</td><td>1,01</td><td>1,1</td></tr>
+<tr><th>\(f(x)\)</th><td>1,9</td><td>1,99</td><td>1,999</td><td>2,001</td><td>2,01</td><td>2,1</td></tr></table>
+<p>Nilai \(f(x)\) mendekati 2, sehingga \(\displaystyle\lim_{x\to1}\frac{x^2-1}{x-1}=2\).</p>
+<div class="note">Limit tidak peduli berapa \(f(c)\); yang penting adalah perilaku \(f\) di sekitar \(c\).</div>`);
+
+add('A. Limit Fungsi Aljabar','a2','2. Sifat-Sifat Limit Fungsi di Satu Titik',String.raw`
+<p>Misalkan \(k\) konstanta, \(\lim_{x\to c}f(x)\) dan \(\lim_{x\to c}g(x)\) ada. Maka:</p>
+<div class="thm"><b class="t">Sifat-Sifat Limit</b><ol>
+<li>\(\displaystyle\lim_{x\to c}k=k\)</li>
+<li>\(\displaystyle\lim_{x\to c}x=c\)</li>
+<li>\(\displaystyle\lim_{x\to c}[k\,f(x)]=k\lim_{x\to c}f(x)\)</li>
+<li>\(\displaystyle\lim_{x\to c}[f(x)\pm g(x)]=\lim_{x\to c}f(x)\pm\lim_{x\to c}g(x)\)</li>
+<li>\(\displaystyle\lim_{x\to c}[f(x)\cdot g(x)]=\lim_{x\to c}f(x)\cdot\lim_{x\to c}g(x)\)</li>
+<li>\(\displaystyle\lim_{x\to c}\frac{f(x)}{g(x)}=\frac{\lim f(x)}{\lim g(x)},\ \lim g(x)\ne0\)</li>
+<li>\(\displaystyle\lim_{x\to c}[f(x)]^n=\left[\lim_{x\to c}f(x)\right]^n\)</li>
+<li>\(\displaystyle\lim_{x\to c}\sqrt[n]{f(x)}=\sqrt[n]{\lim_{x\to c}f(x)}\) (dengan \(\lim f(x)\ge0\) jika \(n\) genap)</li></ol></div>
+<div class="ex"><b class="t">Contoh</b>\(\displaystyle\lim_{x\to2}(3x^2-5x+1)=3(2)^2-5(2)+1=3\).</div>`);
+
+add('A. Limit Fungsi Aljabar','a3','3. Strategi Menentukan Solusi Limit di Satu Titik',String.raw`
+<p>Untuk \(\lim_{x\to c}f(x)\), lakukan langkah berikut berurutan:</p>
+<div class="thm"><b class="t">Tiga Strategi</b><ol>
+<li><b>Substitusi langsung.</b> Jika hasil \(f(c)\) bilangan real, itulah limitnya.</li>
+<li><b>Faktorisasi.</b> Jika hasilnya \(\tfrac00\), faktorkan pembilang/penyebut lalu sederhanakan faktor \((x-c)\).</li>
+<li><b>Kali sekawan.</b> Jika ada bentuk akar, kalikan dengan sekawannya, lalu sederhanakan.</li></ol></div>
+<div class="ex"><b class="t">Contoh (faktorisasi)</b>
+\[\lim_{x\to3}\frac{x^2-9}{x-3}=\lim_{x\to3}\frac{(x-3)(x+3)}{x-3}=\lim_{x\to3}(x+3)=6\]</div>
+<div class="ex"><b class="t">Contoh (kali sekawan)</b>
+\[\lim_{x\to4}\frac{x-4}{\sqrt{x}-2}\cdot\frac{\sqrt{x}+2}{\sqrt{x}+2}=\lim_{x\to4}\frac{(x-4)(\sqrt x+2)}{x-4}=\lim_{x\to4}(\sqrt x+2)=4\]</div>`);
+
+add('A. Limit Fungsi Aljabar','a4','4. Pengertian Limit Fungsi di Tak Berhingga',String.raw`
+<p>Limit di tak berhingga mempelajari perilaku \(f(x)\) saat \(x\) membesar tanpa batas (\(x\to\infty\)) atau mengecil tanpa batas (\(x\to-\infty\)).</p>
+<div class="def"><b class="t">Definisi</b>\(\displaystyle\lim_{x\to\infty}f(x)=L\) berarti \(f(x)\) semakin dekat ke \(L\) ketika \(x\) makin besar. Garis \(y=L\) disebut <b>asimtot datar</b>.</div>
+<h3>Contoh: \(f(x)=\dfrac1x\)</h3>
+<table><tr><th>\(x\)</th><td>10</td><td>100</td><td>1.000</td><td>1.000.000</td></tr>
+<tr><th>\(f(x)\)</th><td>0,1</td><td>0,01</td><td>0,001</td><td>0,000001</td></tr></table>
+<p>Jadi \(\displaystyle\lim_{x\to\infty}\frac1x=0\).</p>
+<div class="note">\(\infty\) bukan bilangan, melainkan lambang "membesar tanpa batas". Jangan memperlakukannya sebagai angka biasa.</div>`);
+
+add('A. Limit Fungsi Aljabar','a5','5. Teorema Limit di Tak Berhingga',String.raw`
+<div class="thm"><b class="t">Teorema</b><ol>
+<li>\(\displaystyle\lim_{x\to\infty}\frac{k}{x^n}=0\), untuk \(n>0\), \(k\) konstanta.</li>
+<li>\(\displaystyle\lim_{x\to-\infty}\frac{k}{x^n}=0\), untuk \(n>0\).</li>
+<li>\(\displaystyle\lim_{x\to\infty}x^n=\infty\) untuk \(n>0\).</li>
+<li>Sifat jumlah, selisih, kali, dan pembagian limit tetap berlaku (selama bukan bentuk tak tentu).</li></ol></div>
+<div class="ex"><b class="t">Contoh</b>
+\[\lim_{x\to\infty}\left(5+\frac{3}{x}-\frac{2}{x^2}\right)=5+0-0=5\]</div>`);
+
+add('A. Limit Fungsi Aljabar','a6','6. Strategi Menentukan Solusi Limit di Tak Berhingga',String.raw`
+<p>Untuk \(\displaystyle\lim_{x\to\infty}\frac{f(x)}{g(x)}\) dengan keduanya polinom: <b>bagi pembilang dan penyebut dengan pangkat tertinggi \(x\)</b>.</p>
+<div class="thm"><b class="t">Rumus Cepat</b>Jika \(f(x)=ax^m+\dots\) dan \(g(x)=bx^n+\dots\), maka
+<table><tr><th>Syarat</th><th>Hasil limit</th></tr>
+<tr><td>\(m<n\)</td><td>\(0\)</td></tr>
+<tr><td>\(m=n\)</td><td>\(\dfrac ab\)</td></tr>
+<tr><td>\(m>n\)</td><td>\(\pm\infty\)</td></tr></table></div>
+<div class="ex"><b class="t">Contoh</b>
+\[\lim_{x\to\infty}\frac{2x^2+3x}{5x^2-1}=\lim_{x\to\infty}\frac{2+\frac3x}{5-\frac1{x^2}}=\frac25\]</div>`);
+
+/* ---------- B. TRIGONOMETRI ---------- */
+add('B. Limit Fungsi Trigonometri','b1','1. Limit Fungsi Sinus',String.raw`
+<div class="thm"><b class="t">Limit Dasar Sinus</b>
+\[\lim_{x\to0}\frac{\sin x}{x}=1\qquad\lim_{x\to0}\frac{x}{\sin x}=1\]
+Bentuk umum:
+\[\lim_{x\to0}\frac{\sin ax}{bx}=\frac ab\qquad\lim_{x\to0}\frac{\sin ax}{\sin bx}=\frac ab\]</div>
+<div class="ex"><b class="t">Contoh</b>
+\[\lim_{x\to0}\frac{\sin5x}{3x}=\frac53\]</div>
+<div class="note">Argumen sinus harus sama dengan penyebutnya agar jadi bentuk dasar. Contoh: \(\frac{\sin 5x}{5x}\to1\).</div>`);
+
+add('B. Limit Fungsi Trigonometri','b2','2. Limit Fungsi Kosinus',String.raw`
+<p>Gunakan identitas \(1-\cos x=2\sin^2\tfrac x2\) untuk mengubahnya ke bentuk sinus.</p>
+<div class="thm"><b class="t">Limit Kosinus</b>
+\[\lim_{x\to0}\frac{1-\cos x}{x^2}=\frac12\qquad\lim_{x\to0}\frac{1-\cos ax}{x^2}=\frac{a^2}{2}\]
+\[\lim_{x\to0}\frac{1-\cos x}{x}=0\]</div>
+<div class="ex"><b class="t">Bukti</b>
+\[\frac{1-\cos x}{x^2}=\frac{2\sin^2\frac x2}{x^2}=\frac12\left(\frac{\sin\frac x2}{\frac x2}\right)^2\to\frac12\]</div>`);
+
+add('B. Limit Fungsi Trigonometri','b3','3. Limit Fungsi Tangens',String.raw`
+<div class="thm"><b class="t">Limit Dasar Tangens</b>
+\[\lim_{x\to0}\frac{\tan x}{x}=1\qquad\lim_{x\to0}\frac{\tan ax}{bx}=\frac ab\qquad\lim_{x\to0}\frac{\tan ax}{\tan bx}=\frac ab\]
+\[\lim_{x\to0}\frac{\tan ax}{\sin bx}=\frac ab\]</div>
+<div class="ex"><b class="t">Contoh</b>
+\[\lim_{x\to0}\frac{\tan4x}{\sin 2x}=\frac42=2\]</div>
+<p>Alasannya \(\tan x=\dfrac{\sin x}{\cos x}\) dan \(\cos x\to1\) saat \(x\to0\).</p>`);
+
+/* ---------- C. BENTUK TAK TENTU ---------- */
+add('C. Bentuk Tak Tentu','c1','1. Bentuk Tak Tentu 0/0',String.raw`
+<div class="def"><b class="t">Bentuk \(\frac00\)</b>Muncul jika substitusi menghasilkan pembilang dan penyebut sama-sama 0. Selesaikan dengan <b>faktorisasi</b>, <b>kali sekawan</b>, atau limit trigonometri dasar.</div>
+<div class="ex"><b class="t">Contoh</b>
+\[\lim_{x\to2}\frac{x^2-x-2}{x^2-4}=\lim_{x\to2}\frac{(x-2)(x+1)}{(x-2)(x+2)}=\frac34\]</div>`);
+
+add('C. Bentuk Tak Tentu','c2','2. Bentuk Tak Tentu ∞/∞',String.raw`
+<div class="def"><b class="t">Bentuk \(\frac\infty\infty\)</b>Muncul pada \(x\to\infty\) saat pembilang dan penyebut sama-sama membesar. Bagi dengan pangkat tertinggi.</div>
+<div class="ex"><b class="t">Contoh dengan akar</b>
+\[\lim_{x\to\infty}\frac{\sqrt{4x^2+1}}{3x+2}=\lim_{x\to\infty}\frac{\sqrt{4+\frac1{x^2}}}{3+\frac2x}=\frac23\]</div>`);
+
+add('C. Bentuk Tak Tentu','c3','3. Bentuk Tak Tentu 0 · ∞',String.raw`
+<div class="def"><b class="t">Bentuk \(0\cdot\infty\)</b>Ubah menjadi pecahan agar menjadi \(\frac00\) atau \(\frac\infty\infty\), misalnya dengan \(a\cdot b=\dfrac{a}{1/b}\).</div>
+<div class="ex"><b class="t">Contoh</b>
+\[\lim_{x\to\infty}x\sin\frac1x\ \ (\infty\cdot0)\]
+Misalkan \(t=\frac1x\), maka \(t\to0\):
+\[\lim_{t\to0}\frac{\sin t}{t}=1\]</div>`);
+
+add('C. Bentuk Tak Tentu','c4','4. Bentuk Tak Tentu ∞ - ∞',String.raw`
+<div class="def"><b class="t">Bentuk \(\infty-\infty\)</b>Biasanya berupa selisih akar. Kalikan dengan sekawan.</div>
+<div class="thm"><b class="t">Rumus Cepat</b>
+\[\lim_{x\to\infty}\left(\sqrt{ax^2+bx+c}-\sqrt{ax^2+px+q}\right)=\frac{b-p}{2\sqrt a}\]
+\[\lim_{x\to\infty}\left(\sqrt{ax^2+bx+c}-(\sqrt a\,x+r)\right)=\frac{b-2r\sqrt a}{2\sqrt a}\]</div>
+<div class="ex"><b class="t">Contoh</b>
+\[\lim_{x\to\infty}\left(\sqrt{x^2+4x}-x\right)=\frac{4-0}{2\sqrt1}=2\]</div>`);
+
+/* ---------- D. TURUNAN ---------- */
+add('D. Menuju Konsep Turunan','d1','D. Limit Fungsi yang Mengarah ke Konsep Turunan',String.raw`
+<p>Kemiringan garis sekan yang melalui \((x,f(x))\) dan \((x+h,f(x+h))\) adalah \(\dfrac{f(x+h)-f(x)}{h}\). Jika \(h\) mendekati 0, garis sekan menjadi garis singgung.</p>
+<div class="def"><b class="t">Definisi Turunan</b>
+\[f'(x)=\lim_{h\to0}\frac{f(x+h)-f(x)}{h}\]
+\(f'(x)\) = gradien garis singgung kurva di titik \(x\) = laju perubahan sesaat.</div>
+<div class="ex"><b class="t">Contoh</b> Untuk \(f(x)=x^2\):
+\[f'(x)=\lim_{h\to0}\frac{(x+h)^2-x^2}{h}=\lim_{h\to0}\frac{2xh+h^2}{h}=\lim_{h\to0}(2x+h)=2x\]</div>
+<div class="note">Inilah awal dari bab <b>Turunan</b>: seluruh aturan turunan dibangun dari limit ini.</div>`);
+
+/* ---------- CONTOH SOAL ---------- */
+const EX = [
+ {q:String.raw`Tentukan \(\displaystyle\lim_{x\to2}\frac{x^2-5x+6}{x-2}\).`,
+  s:String.raw`<ol><li>Substitusi \(x=2\): \(\frac{4-10+6}{0}=\frac00\) (tak tentu).</li><li>Faktorkan: \(x^2-5x+6=(x-2)(x-3)\).</li><li>\(\displaystyle\lim_{x\to2}\frac{(x-2)(x-3)}{x-2}=\lim_{x\to2}(x-3)\)</li><li>Substitusi: \(2-3=\mathbf{-1}\).</li></ol>`},
+ {q:String.raw`Tentukan \(\displaystyle\lim_{x\to1}\frac{\sqrt{x+3}-2}{x-1}\).`,
+  s:String.raw`<ol><li>Substitusi menghasilkan \(\frac00\).</li><li>Kalikan sekawan \(\sqrt{x+3}+2\):<br>\(\displaystyle\frac{(x+3)-4}{(x-1)(\sqrt{x+3}+2)}=\frac{x-1}{(x-1)(\sqrt{x+3}+2)}\)</li><li>Sederhanakan: \(\displaystyle\lim_{x\to1}\frac1{\sqrt{x+3}+2}=\frac1{2+2}=\mathbf{\frac14}\).</li></ol>`},
+ {q:String.raw`Tentukan \(\displaystyle\lim_{x\to\infty}\frac{4x^3-x}{2x^3+5}\).`,
+  s:String.raw`<ol><li>Pangkat tertinggi \(x^3\). Bagi pembilang dan penyebut dengan \(x^3\).</li><li>\(\displaystyle\frac{4-\frac1{x^2}}{2+\frac5{x^3}}\to\frac{4-0}{2+0}\)</li><li>Hasil: \(\mathbf{2}\).</li></ol>`},
+ {q:String.raw`Tentukan \(\displaystyle\lim_{x\to\infty}\left(\sqrt{x^2+6x}-x\right)\).`,
+  s:String.raw`<ol><li>Bentuk \(\infty-\infty\). Kalikan sekawan \(\sqrt{x^2+6x}+x\):<br>\(\displaystyle\frac{(x^2+6x)-x^2}{\sqrt{x^2+6x}+x}=\frac{6x}{\sqrt{x^2+6x}+x}\)</li><li>Bagi dengan \(x\): \(\displaystyle\frac{6}{\sqrt{1+\frac6x}+1}\)</li><li>Untuk \(x\to\infty\): \(\frac{6}{1+1}=\mathbf{3}\).</li></ol>`},
+ {q:String.raw`Tentukan \(\displaystyle\lim_{x\to0}\frac{\tan2x}{\sin5x}\).`,
+  s:String.raw`<ol><li>Gunakan \(\lim\frac{\tan ax}{\sin bx}=\frac ab\).</li><li>\(a=2,\ b=5\).</li><li>Hasil: \(\mathbf{\frac25}\).</li></ol>`},
+ {q:String.raw`Gunakan definisi turunan untuk menentukan \(f'(2)\) jika \(f(x)=x^2+3x\).`,
+  s:String.raw`<ol><li>\(f(2)=4+6=10\), \(f(2+h)=(2+h)^2+3(2+h)=h^2+7h+10\).</li><li>\(\displaystyle f'(2)=\lim_{h\to0}\frac{h^2+7h+10-10}{h}=\lim_{h\to0}(h+7)\)</li><li>Hasil: \(\mathbf{7}\).</li></ol>`}
+];
+
+/* ============ LATIHAN UJI KOMPETENSI (DINAMIS, GAYA UN KTSP) ============ */
+const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+function red(n,d){const g=gcd(n,d)||1;n/=g;d/=g;if(d<0){n=-n;d=-d;}return [n,d];}
+function fr(n,d){[n,d]=red(n,d);return d===1?`${n}`:(n<0?'-':'')+`\\frac{${Math.abs(n)}}{${d}}`;}
+function av(n,d){[n,d]=red(n,d);return d===1?`${n}`:`${n}/${d}`;}
+function poly(c,v='x'){let s='',n=c.length-1;c.forEach((k,i)=>{const p=n-i;if(!k)return;const a=Math.abs(k);const t=(a===1&&p>0?'':a)+(p>0?v+(p>1?'^'+p:''):'');s+=(k<0?'-':(s?'+':''))+t;});return s||'0';}
+const lin=k=>k===0?'x':(k>0?`x+${k}`:`x${k}`);
+const diff2=(a,b)=>{while(b===a)b=R(1,9);return b;};
+const C=n=>n>1?n:'';
+const norm=s=>s.toLowerCase().replace(/\s+/g,'').replace(',','.');
+function val(s){s=norm(s);if(s.includes('/')){const [a,b]=s.split('/').map(Number);return b?a/b:NaN;}return Number(s);}
+let LV=3; const M=()=>3+2*LV;
+const INF=['∞','tak hingga','takhingga','takterhingga','tak berhingga','inf','infinity','+∞'];
+
+const sg=k=>k>=0?'+'+k:''+k;
+const xm=k=>k>=0?`x-${k}`:`x+${-k}`;
+const pr=k=>k<0?`(${k})`:`${k}`;
+const ST=(k,steps,ans)=>`<div class="pb"><b>📘 Konsep:</b> ${k}<br><b>📝 Langkah penyelesaian:</b><ol>${steps.map(x=>`<li>${x}</li>`).join('')}</ol><b>✅ Kesimpulan:</b> ${ans}</div>`;
+const GEN=[
+/* ---- A. Aljabar ---- */
+{g:'A. Limit Aljabar',n:'Substitusi langsung',lv:1,f(){const a=R(-3,3),p=R(1,4),q=R(-5,5),r=R(-6,6),v=p*a*a+q*a+r;
+ return {q:String.raw`\lim_{x\to ${a}}(${poly([p,q,r])})`,a:`${v}`,s:ST(
+ String.raw`Fungsi polinom bersifat kontinu, sehingga \(\lim_{x\to a}f(x)=f(a)\). Cukup substitusikan \(x=${a}\).`,
+ [String.raw`Ganti setiap \(x\) dengan \(${a}\): \(${p}(${a})^2+(${q})(${a})+(${r})\).`,
+  String.raw`Hitung tiap suku: \(${p}\cdot${a*a}=${p*a*a}\); \((${q})(${a})=${q*a}\); konstanta \(${r}\).`,
+  String.raw`Jumlahkan: \(${p*a*a}+(${q*a})+(${r})=${v}\).`],String.raw`nilai limit \(=${v}\).`)};}},
+{g:'A. Limit Aljabar',n:'Faktorisasi (0/0)',lv:1,f(){const a=R(1,M()),b=diff2(a,R(1,M()));
+ return {q:String.raw`\lim_{x\to ${a}}\frac{${poly([1,-(a+b),a*b])}}{x-${a}}`,a:`${a-b}`,s:ST(
+ String.raw`Jika substitusi menghasilkan \(\frac00\) (bentuk tak tentu), faktorkan pembilang lalu coret faktor yang sama dengan penyebut.`,
+ [String.raw`Substitusi \(x=${a}\): pembilang \(=${a*a}-${a+b}\cdot${a}+${a*b}=0\) dan penyebut \(=0\), jadi \(\frac00\) (tak tentu).`,
+  String.raw`Faktorkan pembilang: cari dua bilangan yang hasil kalinya \(${a*b}\) dan jumlahnya \(${a+b}\), yaitu \(${a}\) dan \(${b}\). Jadi \(x^2-${a+b}x+${a*b}=(x-${a})(x-${b})\).`,
+  String.raw`Coret faktor \((x-${a})\): \(\lim_{x\to ${a}}(x-${b})\).`,
+  String.raw`Substitusi \(x=${a}\): \(${a}-${b}=${a-b}\).`],String.raw`nilai limit \(=${a-b}\).`)};}},
+{g:'A. Limit Aljabar',n:'Faktorisasi pembilang dan penyebut',lv:2,f(){const a=R(1,M()),b=diff2(a,R(-5,M()));
+ return {q:String.raw`\lim_{x\to ${a}}\frac{${poly([1,-(a+b),a*b])}}{x^2-${a*a}}`,a:av(a-b,2*a),s:ST(
+ String.raw`Bentuk \(\frac00\) diselesaikan dengan memfaktorkan pembilang dan penyebut, kemudian mencoret faktor sekutu. Ingat \(x^2-a^2=(x-a)(x+a)\).`,
+ [String.raw`Substitusi \(x=${a}\) menghasilkan \(\frac00\), jadi harus difaktorkan.`,
+  String.raw`Pembilang: \(${poly([1,-(a+b),a*b])}=(x-${a})(${xm(b)})\).`,
+  String.raw`Penyebut: \(x^2-${a*a}=(x-${a})(x+${a})\).`,
+  String.raw`Coret \((x-${a})\): \(\lim_{x\to ${a}}\frac{${xm(b)}}{x+${a}}\).`,
+  String.raw`Substitusi \(x=${a}\): \(\frac{${a}-${pr(b)}}{${a}+${a}}=\frac{${a-b}}{${2*a}}\)${red(a-b,2*a)[1]===2*a?'':String.raw` \(=${fr(a-b,2*a)}\) (disederhanakan)`}.`],String.raw`nilai limit \(=${fr(a-b,2*a)}\).`)};}},
+{g:'A. Limit Aljabar',n:'Selisih pangkat tiga',lv:2,f(){const a=R(1,M());
+ return {q:String.raw`\lim_{x\to ${a}}\frac{x^3-${a**3}}{x^2-${a*a}}`,a:av(3*a,2),s:ST(
+ String.raw`\(p^3-q^3=(p-q)(p^2+pq+q^2)\) dan \(p^2-q^2=(p-q)(p+q)\).`,
+ [String.raw`Substitusi \(x=${a}\) menghasilkan \(\frac00\).`,
+  String.raw`Faktorkan pembilang: \(x^3-${a**3}=(x-${a})(x^2+${a}x+${a*a})\).`,
+  String.raw`Faktorkan penyebut: \(x^2-${a*a}=(x-${a})(x+${a})\).`,
+  String.raw`Coret \((x-${a})\): \(\lim_{x\to ${a}}\frac{x^2+${a}x+${a*a}}{x+${a}}\).`,
+  String.raw`Substitusi \(x=${a}\): \(\frac{${a*a}+${a*a}+${a*a}}{${2*a}}=\frac{${3*a*a}}{${2*a}}=${fr(3*a,2)}\).`],String.raw`nilai limit \(=${fr(3*a,2)}\).`)};}},
+{g:'A. Limit Aljabar',n:'Kali sekawan (bentuk akar)',lv:2,f(){const m=R(2,4),c=R(1,M()),k=m*m-c;
+ return {q:String.raw`\lim_{x\to ${c}}\frac{\sqrt{${lin(k)}}-${m}}{x-${c}}`,a:av(1,2*m),s:ST(
+ String.raw`Untuk bentuk akar yang menghasilkan \(\frac00\), kalikan dengan <b>sekawannya</b>: \((\sqrt u-m)(\sqrt u+m)=u-m^2\).`,
+ [String.raw`Substitusi \(x=${c}\): \(\sqrt{${c+k}}-${m}=0\) dan penyebut \(0\), jadi \(\frac00\).`,
+  String.raw`Kalikan pembilang dan penyebut dengan sekawan \(\sqrt{${lin(k)}}+${m}\).`,
+  String.raw`Pembilang menjadi \((${lin(k)})-${m*m}=x-${c}\).`,
+  String.raw`Coret \((x-${c})\): \(\lim_{x\to ${c}}\frac{1}{\sqrt{${lin(k)}}+${m}}\).`,
+  String.raw`Substitusi \(x=${c}\): \(\frac1{${m}+${m}}=\frac1{${2*m}}\).`],String.raw`nilai limit \(=\frac1{${2*m}}\).`)};}},
+{g:'A. Limit Aljabar',n:'Sekawan pada penyebut',lv:2,f(){const m=R(2,5),a=R(1,M()),p=m*m-a;
+ return {q:String.raw`\lim_{x\to ${a}}\frac{x-${a}}{\sqrt{${lin(p)}}-${m}}`,a:`${2*m}`,s:ST(
+ String.raw`Jika bentuk akar berada di penyebut, kalikan dengan sekawan penyebut: \((\sqrt u-m)(\sqrt u+m)=u-m^2\).`,
+ [String.raw`Substitusi \(x=${a}\) memberi \(\frac00\).`,
+  String.raw`Kalikan dengan \(\frac{\sqrt{${lin(p)}}+${m}}{\sqrt{${lin(p)}}+${m}}\).`,
+  String.raw`Penyebut menjadi \((${lin(p)})-${m*m}=x-${a}\).`,
+  String.raw`Coret \((x-${a})\): \(\lim_{x\to ${a}}\left(\sqrt{${lin(p)}}+${m}\right)\).`,
+  String.raw`Substitusi \(x=${a}\): \(${m}+${m}=${2*m}\).`],String.raw`nilai limit \(=${2*m}\).`)};}},
+{g:'A. Limit Aljabar',n:'Tak berhingga: pangkat sama',lv:1,f(){const a=R(1,M()),d=R(1,M()),b=R(-5,5),c=R(-5,5),e=R(-5,5),f=R(1,6);
+ return {q:String.raw`\lim_{x\to\infty}\frac{${poly([a,b,c])}}{${poly([d,e,f])}}`,a:av(a,d),s:ST(
+ String.raw`Untuk \(x\to\infty\) pada pecahan polinom, bagi pembilang dan penyebut dengan <b>pangkat tertinggi</b>. Ingat \(\lim_{x\to\infty}\frac{k}{x^n}=0\).`,
+ [String.raw`Pangkat tertinggi adalah \(x^2\). Bagi semua suku dengan \(x^2\).`,
+  String.raw`Bentuknya menjadi \(\frac{${a}+\frac{${b}}{x}+\frac{${c}}{x^2}}{${d}+\frac{${e}}{x}+\frac{${f}}{x^2}}\).`,
+  String.raw`Untuk \(x\to\infty\), semua suku \(\frac{k}{x}\) dan \(\frac{k}{x^2}\) menuju \(0\).`,
+  String.raw`Tersisa perbandingan koefisien \(x^2\): \(\frac{${a}}{${d}}\).`],String.raw`nilai limit \(=${fr(a,d)}\).`)};}},
+{g:'A. Limit Aljabar',n:'Tak berhingga: bentuk perkalian',lv:2,f(){const a=R(1,4),b=R(-4,4),c=R(1,4),d=R(1,5),e=R(1,4),f=R(-4,4);
+ return {q:String.raw`\lim_{x\to\infty}\frac{(${poly([a,b])})^2}{(${poly([c,-d])})(${poly([e,f])})}`,a:av(a*a,c*e),s:ST(
+ String.raw`Hasil limit di tak berhingga hanya ditentukan oleh suku berpangkat tertinggi pembilang dan penyebut.`,
+ [String.raw`Pembilang: \((${poly([a,b])})^2\) berderajat 2 dengan koefisien \(x^2\) sebesar \(${a}^2=${a*a}\).`,
+  String.raw`Penyebut: \((${poly([c,-d])})(${poly([e,f])})\) berderajat 2 dengan koefisien \(x^2\) sebesar \(${c}\cdot${e}=${c*e}\).`,
+  String.raw`Derajat pembilang sama dengan derajat penyebut, jadi hasilnya perbandingan koefisien: \(\frac{${a*a}}{${c*e}}\).`],String.raw`nilai limit \(=${fr(a*a,c*e)}\).`)};}},
+{g:'A. Limit Aljabar',n:'Tak berhingga: pangkat berbeda',lv:1,f(){
+ if(R(0,1)){const p=R(1,6),q=R(-5,5),r=R(1,6),t=R(-5,5),u=R(-5,5);
+  return {q:String.raw`\lim_{x\to\infty}\frac{${poly([p,q])}}{${poly([r,t,u])}}`,a:'0',s:ST(
+  String.raw`Jika derajat pembilang < derajat penyebut, limit di tak berhingga sama dengan \(0\).`,
+  [String.raw`Derajat pembilang \(=1\), derajat penyebut \(=2\).`,
+   String.raw`Bagi semua suku dengan \(x^2\): \(\frac{\frac{${p}}{x}+\frac{${q}}{x^2}}{${r}+\frac{${t}}{x}+\frac{${u}}{x^2}}\).`,
+   String.raw`Pembilang menuju \(0\), penyebut menuju \(${r}\): \(\frac{0}{${r}}=0\).`],String.raw`nilai limit \(=0\).`)};}
+ const pa=R(1,6),pb=R(-4,4),pc=R(-4,4),pd=R(-4,4),ra=R(1,6),rb=R(-4,4),rc=R(1,5);
+ return {q:String.raw`\lim_{x\to\infty}\frac{${poly([pa,pb,pc,pd])}}{${poly([ra,rb,rc])}}`,a:'∞',s:ST(
+ String.raw`Jika derajat pembilang > derajat penyebut, nilai limit membesar tanpa batas (\(\pm\infty\)), mengikuti tanda perbandingan koefisien pangkat tertinggi.`,
+ [String.raw`Derajat pembilang \(=3\), derajat penyebut \(=2\).`,
+  String.raw`Bagi dengan \(x^3\): pembilang menuju \(${pa}\), sedangkan penyebut menuju \(0\) (dari sisi positif).`,
+  String.raw`Pecahan \(\frac{${pa}}{0^+}\) membesar tanpa batas, bertanda positif karena \(\frac{${pa}}{${ra}}>0\).`],String.raw`nilai limit \(=\infty\) (limit tidak ada secara berhingga).`)};}},
+{g:'A. Limit Aljabar',n:'Akar dibagi linear (tak berhingga)',lv:2,f(){const s=R(1,4),p=R(1,5),b=R(-6,6),c=R(1,6),q=R(-4,5);
+ return {q:String.raw`\lim_{x\to\infty}\frac{\sqrt{${poly([s*s,b,c])}}}{${poly([p,q])}}`,a:av(s,p),s:ST(
+ String.raw`Untuk \(x\) sangat besar, \(\sqrt{ax^2+bx+c}\approx\sqrt a\,x\). Bagi pembilang dan penyebut dengan \(x\) (ingat \(x=\sqrt{x^2}\) untuk \(x>0\)).`,
+ [String.raw`Bagi pembilang dengan \(x\): \(\sqrt{\frac{${poly([s*s,b,c])}}{x^2}}=\sqrt{${s*s}+\frac{${b}}{x}+\frac{${c}}{x^2}}\).`,
+  String.raw`Bagi penyebut dengan \(x\): \(${p}+\frac{${q}}{x}\).`,
+  String.raw`Untuk \(x\to\infty\): pembilang \(\to\sqrt{${s*s}}=${s}\) dan penyebut \(\to${p}\).`],String.raw`nilai limit \(=\frac{${s}}{${p}}=${fr(s,p)}\).`)};}},
+/* ---- B. Trigonometri ---- */
+{g:'B. Limit Trigonometri',n:'Limit sinus',lv:1,f(){const a=R(1,M()),b=R(1,M());
+ return {q:String.raw`\lim_{x\to0}\frac{\sin ${C(a)}x}{${C(b)}x}`,a:av(a,b),s:ST(
+ String.raw`\(\lim_{x\to0}\frac{\sin x}{x}=1\), sehingga \(\lim_{x\to0}\frac{\sin ax}{bx}=\frac ab\).`,
+ [String.raw`Ubah agar penyebut sama dengan sudut sinus: \(\frac{\sin ${C(a)}x}{${C(b)}x}=\frac{${a}}{${b}}\cdot\frac{\sin ${C(a)}x}{${C(a)}x}\).`,
+  String.raw`Saat \(x\to0\), \(${C(a)}x\to0\) sehingga \(\frac{\sin ${C(a)}x}{${C(a)}x}\to1\).`,
+  String.raw`Maka limit \(=\frac{${a}}{${b}}\cdot1\).`],String.raw`nilai limit \(=${fr(a,b)}\).`)};}},
+{g:'B. Limit Trigonometri',n:'Limit tangens dan sinus',lv:1,f(){const a=R(1,M()),b=R(1,M());
+ return {q:String.raw`\lim_{x\to0}\frac{\tan ${C(a)}x}{\sin ${C(b)}x}`,a:av(a,b),s:ST(
+ String.raw`\(\lim_{x\to0}\frac{\tan ax}{bx}=\frac ab\) dan \(\lim_{x\to0}\frac{\sin bx}{bx}=1\), sehingga \(\lim_{x\to0}\frac{\tan ax}{\sin bx}=\frac ab\).`,
+ [String.raw`Tulis \(\frac{\tan ${C(a)}x}{\sin ${C(b)}x}=\frac{\tan ${C(a)}x}{${C(a)}x}\cdot\frac{${C(b)}x}{\sin ${C(b)}x}\cdot\frac{${a}x}{${b}x}\).`,
+  String.raw`Dua faktor pertama masing-masing menuju \(1\) saat \(x\to0\).`,
+  String.raw`Faktor terakhir: \(\frac{${a}x}{${b}x}=\frac{${a}}{${b}}\).`],String.raw`nilai limit \(=${fr(a,b)}\).`)};}},
+{g:'B. Limit Trigonometri',n:'Limit kosinus',lv:1,f(){const a=R(1,6);
+ return {q:String.raw`\lim_{x\to0}\frac{1-\cos ${C(a)}x}{x^2}`,a:av(a*a,2),s:ST(
+ String.raw`Identitas setengah sudut: \(1-\cos\theta=2\sin^2\frac\theta2\).`,
+ [String.raw`Ubah pembilang: \(1-\cos ${C(a)}x=2\sin^2\frac{${C(a)}x}{2}\).`,
+  String.raw`Maka \(\frac{2\sin^2\frac{${C(a)}x}{2}}{x^2}=2\left(\frac{\sin\frac{${C(a)}x}{2}}{x}\right)^2\).`,
+  String.raw`Karena \(\frac{\sin\frac{${a}x}{2}}{x}\to\frac{${a}}{2}\), diperoleh \(2\cdot\left(\frac{${a}}{2}\right)^2=\frac{${a*a}}{2}\).`],String.raw`nilai limit \(=${fr(a*a,2)}\).`)};}},
+{g:'B. Limit Trigonometri',n:'Perkalian sinus',lv:2,f(){const a=R(1,6),b=R(1,6),c=R(1,6);
+ return {q:String.raw`\lim_{x\to0}\frac{\sin ${C(a)}x\,\sin ${C(b)}x}{${C(c)}x^2}`,a:av(a*b,c),s:ST(
+ String.raw`Pecah \(x^2=x\cdot x\), lalu gunakan \(\lim_{x\to0}\frac{\sin kx}{x}=k\).`,
+ [String.raw`Tulis \(\frac{1}{${c}}\cdot\frac{\sin ${C(a)}x}{x}\cdot\frac{\sin ${C(b)}x}{x}\).`,
+  String.raw`\(\frac{\sin ${C(a)}x}{x}\to${a}\) dan \(\frac{\sin ${C(b)}x}{x}\to${b}\).`,
+  String.raw`Hasil: \(\frac{${a}\cdot${b}}{${c}}=\frac{${a*b}}{${c}}\).`],String.raw`nilai limit \(=${fr(a*b,c)}\).`)};}},
+{g:'B. Limit Trigonometri',n:'1 − cos pada x · sin',lv:2,f(){const a=R(1,6),b=R(1,6);
+ return {q:String.raw`\lim_{x\to0}\frac{1-\cos ${C(a)}x}{x\sin ${C(b)}x}`,a:av(a*a,2*b),s:ST(
+ String.raw`\(1-\cos\theta=2\sin^2\frac\theta2\) dan \(\lim_{x\to0}\frac{\sin kx}{x}=k\).`,
+ [String.raw`Ubah pembilang: \(1-\cos ${C(a)}x=2\sin^2\frac{${C(a)}x}{2}\).`,
+  String.raw`Pisahkan: \(\frac{2\sin\frac{${C(a)}x}{2}\cdot\sin\frac{${C(a)}x}{2}}{x\cdot\sin ${C(b)}x}=2\cdot\frac{\sin\frac{${C(a)}x}{2}}{x}\cdot\frac{\sin\frac{${C(a)}x}{2}}{\sin ${C(b)}x}\).`,
+  String.raw`Suku pertama \(\to\frac{${a}}{2}\); suku kedua \(\to\frac{${a}/2}{${b}}=\frac{${a}}{${2*b}}\).`,
+  String.raw`Kalikan: \(2\cdot\frac{${a}}{2}\cdot\frac{${a}}{${2*b}}=\frac{${a*a}}{${2*b}}\).`],String.raw`nilai limit \(=${fr(a*a,2*b)}\).`)};}},
+{g:'B. Limit Trigonometri',n:'cos − 1 pada x · tan',lv:3,f(){const a=R(1,6),b=R(1,6);
+ return {q:String.raw`\lim_{x\to0}\frac{\cos ${C(a)}x-1}{x\tan ${C(b)}x}`,a:av(-a*a,2*b),s:ST(
+ String.raw`\(\cos\theta-1=-2\sin^2\frac\theta2\) dan \(\lim_{x\to0}\frac{\tan kx}{x}=k\).`,
+ [String.raw`Ubah pembilang: \(\cos ${C(a)}x-1=-2\sin^2\frac{${C(a)}x}{2}\).`,
+  String.raw`Maka \(\frac{-2\sin^2\frac{${C(a)}x}{2}}{x\tan ${C(b)}x}=-2\cdot\frac{\sin\frac{${C(a)}x}{2}}{x}\cdot\frac{\sin\frac{${C(a)}x}{2}}{\tan ${C(b)}x}\).`,
+  String.raw`Suku pertama \(\to\frac{${a}}{2}\); suku kedua \(\to\frac{${a}/2}{${b}}=\frac{${a}}{${2*b}}\).`,
+  String.raw`Kalikan: \(-2\cdot\frac{${a}}{2}\cdot\frac{${a}}{${2*b}}=-\frac{${a*a}}{${2*b}}\).`],String.raw`nilai limit \(=${fr(-a*a,2*b)}\) (negatif karena \(\cos ax-1\le0\)).`)};}},
+{g:'B. Limit Trigonometri',n:'x · tan dibagi 1 − cos',lv:3,f(){const a=R(1,6),b=R(1,5);
+ return {q:String.raw`\lim_{x\to0}\frac{x\tan ${C(a)}x}{1-\cos ${C(b)}x}`,a:av(2*a,b*b),s:ST(
+ String.raw`Ubah \(1-\cos\theta=2\sin^2\frac\theta2\), lalu gunakan \(\lim\frac{\tan kx}{x}=k\) dan \(\lim\frac{\sin kx}{x}=k\).`,
+ [String.raw`Penyebut: \(1-\cos ${C(b)}x=2\sin^2\frac{${C(b)}x}{2}\).`,
+  String.raw`Tulis \(\frac{x\tan ${C(a)}x}{2\sin^2\frac{${C(b)}x}{2}}=\frac12\cdot\frac{x}{\sin\frac{${C(b)}x}{2}}\cdot\frac{\tan ${C(a)}x}{\sin\frac{${C(b)}x}{2}}\).`,
+  String.raw`\(\frac{x}{\sin\frac{${C(b)}x}{2}}\to\frac{2}{${b}}\) dan \(\frac{\tan ${C(a)}x}{\sin\frac{${C(b)}x}{2}}\to\frac{${a}}{${b}/2}=\frac{${2*a}}{${b}}\).`,
+  String.raw`Kalikan: \(\frac12\cdot\frac2{${b}}\cdot\frac{${2*a}}{${b}}=\frac{${2*a}}{${b*b}}\).`],String.raw`nilai limit \(=${fr(2*a,b*b)}\).`)};}},
+{g:'B. Limit Trigonometri',n:'sin(x − a) dibagi selisih kuadrat',lv:3,f(){const a=R(1,M());
+ return {q:String.raw`\lim_{x\to ${a}}\frac{\sin(x-${a})}{x^2-${a*a}}`,a:av(1,2*a),s:ST(
+ String.raw`Faktorkan penyebut, lalu gunakan substitusi \(t=x-${a}\) sehingga \(t\to0\) dan \(\lim_{t\to0}\frac{\sin t}{t}=1\).`,
+ [String.raw`Faktorkan penyebut: \(x^2-${a*a}=(x-${a})(x+${a})\).`,
+  String.raw`Pisahkan: \(\frac{\sin(x-${a})}{x-${a}}\cdot\frac{1}{x+${a}}\).`,
+  String.raw`Dengan \(t=x-${a}\to0\): \(\frac{\sin t}{t}\to1\), dan \(\frac1{x+${a}}\to\frac1{${a}+${a}}=\frac1{${2*a}}\).`],String.raw`nilai limit \(=1\cdot\frac1{${2*a}}=\frac1{${2*a}}\).`)};}},
+{g:'B. Limit Trigonometri',n:'tan − sin pada x³',lv:3,f(){const a=R(1,4);
+ return {q:String.raw`\lim_{x\to0}\frac{\tan ${C(a)}x-\sin ${C(a)}x}{x^3}`,a:av(a**3,2),s:ST(
+ String.raw`\(\tan t-\sin t=\tan t\,(1-\cos t)\) dan \(1-\cos t=2\sin^2\frac t2\). Misal \(t=${C(a)}x\).`,
+ [String.raw`Tulis \(\tan t-\sin t=\tan t\cdot2\sin^2\frac t2\).`,
+  String.raw`Maka \(\frac{\tan t\cdot2\sin^2\frac t2}{x^3}=2\cdot\frac{\tan ${C(a)}x}{x}\cdot\left(\frac{\sin\frac{${C(a)}x}{2}}{x}\right)^2\).`,
+  String.raw`\(\frac{\tan ${C(a)}x}{x}\to${a}\) dan \(\frac{\sin\frac{${C(a)}x}{2}}{x}\to\frac{${a}}{2}\).`,
+  String.raw`Hasil: \(2\cdot${a}\cdot\left(\frac{${a}}{2}\right)^2=\frac{${a**3}}{2}\).`],String.raw`nilai limit \(=${fr(a**3,2)}\).`)};}},
+/* ---- C. Bentuk tak tentu ---- */
+{g:'C. Bentuk Tak Tentu',n:'∞ − ∞ (selisih dua akar)',lv:2,f(){const s=R(1,3),b=R(1,9),p=R(-4,6),c=R(0,5),q=R(0,5);
+ return {q:String.raw`\lim_{x\to\infty}\left(\sqrt{${poly([s*s,b,c])}}-\sqrt{${poly([s*s,p,q])}}\right)`,a:av(b-p,2*s),s:ST(
+ String.raw`Bentuk \(\infty-\infty\) pada selisih akar diselesaikan dengan mengalikan sekawan: \((\sqrt A-\sqrt B)(\sqrt A+\sqrt B)=A-B\).`,
+ [String.raw`Kalikan dengan \(\frac{\sqrt A+\sqrt B}{\sqrt A+\sqrt B}\), dengan \(A=${poly([s*s,b,c])}\) dan \(B=${poly([s*s,p,q])}\).`,
+  String.raw`Pembilang: \(A-B=${poly([b-p,c-q])}\).`,
+  String.raw`Bagi pembilang dan penyebut dengan \(x\): pembilang \(\to${b-p}\); penyebut \(\sqrt{${s*s}+\dots}+\sqrt{${s*s}+\dots}\to${s}+${s}=${2*s}\).`,
+  String.raw`Hasil: \(\frac{${b-p}}{${2*s}}\).`],String.raw`nilai limit \(=${fr(b-p,2*s)}\). (Rumus cepat: \(\frac{b-p}{2\sqrt a}\)).`)};}},
+{g:'C. Bentuk Tak Tentu',n:'∞ − ∞ (linear dikurangi akar)',lv:3,f(){const p=R(1,4),q=R(-5,5),b=R(-12,12),c=R(1,9);
+ return {q:String.raw`\lim_{x\to\infty}\left(${poly([p,q])}-\sqrt{${poly([p*p,b,c])}}\right)`,a:av(2*p*q-b,2*p),s:ST(
+ String.raw`Ubah bentuk linear menjadi akar yang sejenis atau kalikan sekawan: \((P-\sqrt Q)(P+\sqrt Q)=P^2-Q\).`,
+ [String.raw`Kalikan dengan \(\frac{(${poly([p,q])})+\sqrt{${poly([p*p,b,c])}}}{(${poly([p,q])})+\sqrt{${poly([p*p,b,c])}}}\).`,
+  String.raw`Pembilang: \((${poly([p,q])})^2-(${poly([p*p,b,c])})=${poly([2*p*q-b,q*q-c])}\).`,
+  String.raw`Bagi dengan \(x\): pembilang \(\to${2*p*q-b}\); penyebut \(\to${p}+\sqrt{${p*p}}=${2*p}\).`,
+  String.raw`Hasil: \(\frac{${2*p*q-b}}{${2*p}}\).`],String.raw`nilai limit \(=${fr(2*p*q-b,2*p)}\).`)};}},
+{g:'C. Bentuk Tak Tentu',n:'0 · ∞ (substitusi t = 1/x)',lv:2,f(){const a=R(2,9);
+ return {q:String.raw`\lim_{x\to\infty}x\sin\frac{${a}}{x}`,a:`${a}`,s:ST(
+ String.raw`Bentuk \(\infty\cdot0\) diubah menjadi pecahan dengan substitusi \(t=\frac1x\); jika \(x\to\infty\) maka \(t\to0\).`,
+ [String.raw`Misal \(t=\frac1x\), maka \(x=\frac1t\) dan \(\frac{${a}}{x}=${a}t\).`,
+  String.raw`Limit menjadi \(\lim_{t\to0}\frac{\sin ${a}t}{t}\).`,
+  String.raw`Gunakan \(\lim_{t\to0}\frac{\sin kt}{t}=k\) dengan \(k=${a}\).`],String.raw`nilai limit \(=${a}\).`)};}},
+/* ---- D. Turunan ---- */
+{g:'D. Konsep Turunan',n:'Turunan dari definisi limit',lv:2,f(){const p=R(1,4),q=R(-4,5),c=R(1,5),v=2*p*c+q;
+ return {q:String.raw`f(x)=${poly([p,q,0])}\ \Rightarrow\ \lim_{h\to0}\frac{f(${c}+h)-f(${c})}{h}`,a:`${v}`,s:ST(
+ String.raw`Limit tersebut adalah definisi turunan di \(x=${c}\): \(f'(${c})=\lim_{h\to0}\frac{f(${c}+h)-f(${c})}{h}\).`,
+ [String.raw`Hitung \(f(${c})=${p}(${c})^2+(${q})(${c})=${p*c*c+q*c}\).`,
+  String.raw`Hitung \(f(${c}+h)=${p}(${c}+h)^2+(${q})(${c}+h)=${p*c*c+q*c}${sg(2*p*c+q)}h+${p}h^2\).`,
+  String.raw`Selisih: \(f(${c}+h)-f(${c})=${2*p*c+q}h+${p}h^2=h(${2*p*c+q}+${p}h)\).`,
+  String.raw`Bagi dengan \(h\): \(${2*p*c+q}+${p}h\). Untuk \(h\to0\) hasilnya \(${2*p*c+q}\).`],String.raw`nilai limit \(=f'(${c})=${v}\).`)};}}
+];
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=R(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;}
+function ltx(a){if(a==='∞')return '\\infty';if(a.includes('/')){const [n,d]=a.split('/').map(Number);return fr(n,d);}return a;}
+function mkOpts(a){
+ let ds=[];
+ if(a==='∞'){ds=shuffle(['0','1','-1','2','-\\infty','\\text{tidak ada}']).slice(0,4);}
+ else{
+  const [n,d]=a.includes('/')?a.split('/').map(Number):[Number(a),1];
+  const seen=new Set([a]);
+  const add=(x,y)=>{if(y===0||ds.length>=4)return;const k=av(x,y);if(!seen.has(k)){seen.add(k);ds.push(ltx(k));}};
+  const cand=[[n+d,d],[n-d,d],[2*n,d],[n,2*d],[-n,d],[n+2*d,d],[0,1]];
+  if(n!==0)cand.push([d,n]);
+  shuffle(cand).forEach(c=>add(c[0],c[1]));
+  if(R(0,3)===0&&ds.length>=4)ds[R(0,3)]='\\infty';
+  for(let k=1;ds.length<4;k++){add(n+k*d,d);add(n-k*d,d);}
+ }
+ return shuffle([{t:ltx(a),ok:true},...ds.map(t=>({t,ok:false}))]);
+}
+
+let qs=[],cfg=null;
+const gv=id=>document.getElementById(id).value;
+const LVN={1:'Dasar',2:'Menengah',3:'Level UN (KTSP)'};
+function kOpts(g){return '<option value="all">🎲 Acak semua jenis</option>'+GEN.map((x,i)=>(g==='all'||x.g===g)?`<option value="${i}">${x.n}</option>`:'').join('');}
+function renderQz(){
+ const groups=[...new Set(GEN.map(x=>x.g))];
+ return `<div class="q" id="qzSet">
+  <label>Materi: <select id="qG" onchange="qFilter()"><option value="all">Semua materi</option>${groups.map(g=>`<option>${g}</option>`).join('')}</select></label><br><br>
+  <label>Jenis soal: <select id="qK">${kOpts('all')}</select></label><br><br>
+  <label>Tingkat: <select id="qL"><option value="1">Dasar</option><option value="2">Menengah</option><option value="3" selected>Level UN (KTSP)</option></select></label><br><br>
+  <label>Jumlah soal: <select id="qN"><option>5</option><option selected>10</option><option>15</option><option>20</option></select></label><br><br>
+  <label>Bentuk soal: <select id="qM"><option value="pg">Pilihan ganda (A–E)</option><option value="is">Isian singkat</option></select></label><br><br>
+  <button class="btn" onclick="startQz()">Mulai Latihan</button>
+ </div><div id="qzArea"></div>`;
+}
+function qFilter(){document.getElementById('qK').innerHTML=kOpts(gv('qG'));}
+function startQz(){
+ cfg={g:gv('qG'),k:gv('qK'),n:+gv('qN'),lv:+gv('qL'),m:gv('qM')};
+ buildQs();
+}
+function buildQs(){
+ LV=cfg.lv;
+ let pool=GEN.filter(x=>(cfg.g==='all'||x.g===cfg.g)&&x.lv<=LV);
+ if(!pool.length)pool=GEN.filter(x=>cfg.g==='all'||x.g===cfg.g);
+ qs=[];let bag=[];
+ for(let i=0;i<cfg.n;i++){
+  let gen;
+  if(cfg.k==='all'){if(!bag.length)bag=shuffle(pool.slice());gen=bag.pop();}else gen=GEN[+cfg.k];
+  let p,t=0;do{p=gen.f();t++;}while(qs.some(x=>x.p.q===p.q)&&t<10);
+  qs.push({gen,p,o:cfg.m==='pg'?mkOpts(p.a):null});
+ }
+ const L='ABCDE';
+ document.getElementById('qzArea').innerHTML=
+ `<p class="note">${cfg.n} soal · ${cfg.g==='all'?'Semua materi':cfg.g} · ${LVN[cfg.lv]} · ${cfg.m==='pg'?'Pilihan ganda':'Isian singkat'}. Setiap soal bernilai ${Math.round(100/cfg.n*10)/10}.</p>`+
+ qs.map((z,i)=>`<div class="q" id="q${i}"><b>${i+1}.</b> <span class="tag">${z.gen.n}</span><div style="overflow-x:auto">Tentukan nilai dari \\[${z.p.q}\\]</div>`+
+  (z.o?z.o.map((o,j)=>`<label class="opt"><input type="radio" name="u${i}" value="${j}"> ${L[j]}. \\(${o.t}\\)</label>`).join(''):`<input type="text" id="in${i}" placeholder="Jawabanmu (mis. 3/2 atau 1,5)">`)+
+  `<div class="fb" id="fb${i}"></div></div>`).join('')+
+ `<button class="btn" onclick="checkQz()">Periksa Jawaban</button> <button class="btn alt" onclick="buildQs()">Ulangi Latihan (soal baru)</button> <button class="btn warn" onclick="document.getElementById('qzSet').scrollIntoView({behavior:'smooth'})">Ubah Pengaturan</button>
+  <div class="score" id="score"></div>`;
+ typeset();
+ document.getElementById('qzArea').scrollIntoView({behavior:'smooth'});
+}
+function checkQz(){
+ let sc=0;const L='ABCDE';
+ qs.forEach((z,i)=>{
+  const box=document.getElementById('q'+i),fb=document.getElementById('fb'+i);let ok=false,has=false,pick='';
+  if(z.o){const r=document.querySelector(`input[name=u${i}]:checked`);has=!!r;pick=r?L[+r.value]:'';ok=has&&z.o[+r.value].ok;}
+  else{const raw=document.getElementById('in'+i).value;has=raw.trim()!=='';const n=norm(raw);
+   ok=has&&(z.p.a==='∞'?INF.includes(n):Math.abs(val(z.p.a)-val(raw))<1e-9);}
+  if(ok)sc++;
+  box.classList.remove('ok','no');box.classList.add(ok?'ok':'no');
+  const ans=z.o?`${L[z.o.findIndex(o=>o.ok)]}. \\(${ltx(z.p.a)}\\)`:`\\(${ltx(z.p.a)}\\)`;
+  fb.innerHTML=(ok?'✅ <b>Benar!</b> ':(has?'❌ <b>Belum tepat.</b> '+(pick?`Pilihanmu: ${pick}. `:''):'⚠️ <b>Belum dijawab.</b> '))+`Jawaban: ${ans}<br><br><b>Pembahasan:</b>${z.p.s}`;
+ });
+ const total=Math.round(sc/qs.length*100),el=document.getElementById('score');el.style.display='block';
+ el.innerHTML=`Skor: ${total} / 100 &nbsp;(${sc} benar dari ${qs.length} soal)<br><small>${total>=80?'🎉 Hebat! Kamu siap menghadapi soal level UN.':total>=60?'👍 Cukup baik, pelajari kembali pembahasan yang salah.':'💪 Ayo pelajari lagi materinya, lalu tekan Ulangi Latihan.'}</small>`;
+ typeset();el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ============ APLIKASI ============ */
+const items = [];
+S.forEach(s => items.push({g:s.g,id:s.id,t:s.t}));
+items.push({g:'Latihan',id:'ex',t:'Soal-Soal yang Diselesaikan'});
+items.push({g:'Latihan',id:'qz',t:'Latihan Uji Kompetensi'});
+let cur = 0; const visited = new Set();
+
+function buildSide(){
+  let h='<div class="shead"><div class="slogo"><img class="lgimg" alt="Logo SMA S Al Kautsar" style="display:none" onerror="logoFail()"><span class="lgfb">📐</span></div><div class="stx"><h1>Pembelajaran Digital<br>SMA S Al Kautsar</h1><div class="sub">Limit Fungsi &middot; Unggul, Islami Global</div></div></div><div id="bar"><i></i></div>', lg='';
+  items.forEach((it,i)=>{ if(it.g!==lg){h+=`<div class="grp">${({A:'🧮',B:'📐',C:'♾️',D:'📈',L:'🎯'})[it.g[0]]} ${it.g}</div>`;lg=it.g;}
+    h+=`<a data-i="${i}" onclick="go(${i})">${it.t}</a>`; });
+  document.getElementById('side').innerHTML=h;
+}
+function toggleSide(){document.getElementById('side').classList.toggle('open');document.getElementById('ov').classList.toggle('open');}
+function typeset(){ if(window.MathJax&&MathJax.typesetPromise){MathJax.typesetPromise([document.getElementById('view')]);} else setTimeout(typeset,300); }
+
+/* ===== VISUALISASI BERGERAK ===== */
+const cB='#0f766e',cO='#f59e0b',cG='#16a34a',cP='#7c3aed';
+const fmtn=v=>{if(!isFinite(v))return '—';const a=Math.abs(v);return a===0?'0':(a<1e-4||a>=1e5)?v.toExponential(2):String(+v.toPrecision(6));};
+const VIZ={
+ a1:{t:'limit',title:'Mendekati x = 1 dari kiri dan kanan',at:1,xr:[-1,3],yr:[-0.5,4.5],fs:[{n:'f(x)',f:x=>(x*x-1)/(x-1),L:2,hole:true,col:cB}],
+  cap:'Titik kosong (kiri) dan titik penuh (kanan) bergerak mendekati x = 1. Nilai f(x) dari kedua sisi sama-sama mendekati 2, padahal f(1) tidak terdefinisi.',
+  app:'speedometer menghitung kecepatan sesaat dari selang waktu yang makin singkat.'},
+ a2:{t:'limit',title:'Limit jumlah = jumlah limit',at:2,xr:[0,3.5],yr:[-1,11],fs:[{n:'f(x)=x+1',f:x=>x+1,L:3,col:cB},{n:'g(x)=x²/2',f:x=>x*x/2,L:2,col:cO},{n:'f+g',f:x=>x+1+x*x/2,L:5,col:cP}],
+  cap:'Tiga grafik bergerak bersamaan. Limit f + g selalu sama dengan limit f ditambah limit g, yaitu 3 + 2 = 5.',
+  app:'total biaya = biaya tetap + biaya variabel, sehingga limit total sama dengan jumlah limit tiap bagiannya.'},
+ a3:{t:'zoom',title:'Memperbesar grafik di sekitar x = 3',at:3,L:6,f:x=>(x*x-9)/(x-3),
+  cap:'Grafik (x² − 9)/(x − 3) diperbesar terus. Tampak seperti garis lurus y = x + 3, hanya ada satu titik "bolong" di (3, 6). Itulah nilai yang dicari limit.',
+  app:'seperti memakai lup: detail satu titik tetap bisa ditelaah walau titik itu sendiri tidak terdefinisi.'},
+ a4:{t:'asym',title:'Teh panas mendingin menuju suhu ruang',f:t=>27+63*Math.exp(-t/10),L:27,xr:[0,60],yr:[20,95],xl:'waktu (menit)',yl:'suhu (°C)',xn:'t',
+  cap:'Suhu teh T(t) = 27 + 63·e^(−t/10). Titik bergerak ke kanan, suhunya makin dekat ke 27 °C tanpa pernah melewatinya.',
+  app:'setelah menunggu sangat lama, suhu mendekati suhu ruang. Limit di tak berhingga = 27 °C.'},
+ a5:{t:'asym',title:'Biaya rata-rata per produk',f:x=>5+200/x,L:5,xr:[5,200],yr:[0,50],xl:'jumlah produk (x)',yl:'biaya per produk (ribu Rp)',xn:'x',
+  cap:'Biaya produksi C(x) = 5x + 200 (ribu rupiah). Biaya per produk = 5 + 200/x makin kecil dan mendekati 5 ketika produksi makin banyak.',
+  app:'pabrik: makin banyak produksi, biaya tetap terbagi ke lebih banyak produk sehingga biaya per produk makin murah.'},
+ a6:{t:'asym',title:'Mendekati asimtot datar y = 3',f:x=>(3*x*x+2*x)/(x*x-5),L:3,xr:[3,50],yr:[2,9],xl:'x',yl:'f(x)',xn:'x',
+  cap:'Untuk f(x) = (3x² + 2x)/(x² − 5), pangkat tertinggi pembilang dan penyebut sama, jadi grafik mendekati y = 3 (perbandingan koefisien 3/1).',
+  app:'pertumbuhan pada ruang terbatas (bakteri, pengguna aplikasi) selalu mendekati daya tampung maksimum.'},
+ b1:{t:'limit',title:'Nilai sin x / x di sekitar 0',at:0,xr:[-6,6],yr:[-0.4,1.3],fs:[{n:'sin x / x',f:x=>Math.sin(x)/x,L:1,hole:true,col:cB}],
+  cap:'Meskipun f(0) tidak terdefinisi (0/0), nilai sin x / x mendekati 1 dari kiri maupun kanan (x dalam radian).',
+  app:'pengolahan sinyal suara dan radio: fungsi sin x / x menentukan bentuk sinyal.'},
+ b2:{t:'pend',title:'Ayunan bandul: 1 − cos θ ≈ θ²/2',
+  cap:'Bandul berayun. Geser slider untuk mengubah amplitudo θ. Makin kecil θ, perbandingan (1 − cos θ)/θ² makin dekat ke ½, sehingga tinggi naik h ≈ ℓθ²/2.',
+  app:'jam bandul dan ayunan: untuk simpangan kecil, tinggi dan energi bisa dihitung dengan rumus sederhana.'},
+ b3:{t:'limit',title:'Nilai tan x / x di sekitar 0',at:0,xr:[-1.2,1.2],yr:[0.5,2.4],fs:[{n:'tan x / x',f:x=>Math.tan(x)/x,L:1,hole:true,col:cB}],
+  cap:'Untuk x kecil (dalam radian), tan x hampir sama dengan x, sehingga tan x / x mendekati 1.',
+  app:'kemiringan atap, tangga, atau jalan: untuk sudut yang sangat landai, kemiringan hampir sama dengan besar sudutnya.'},
+ c1:{t:'limit',title:'Bentuk 0/0 di x = 2',at:2,xr:[-1,5],yr:[-0.2,1.2],fs:[{n:'f(x)',f:x=>(x*x-x-2)/(x*x-4),L:0.75,hole:true,col:cB}],
+  cap:'f(x) = (x² − x − 2)/(x² − 4) berbentuk 0/0 di x = 2. Setelah difaktorkan menjadi (x + 1)/(x + 2), nilainya mendekati 3/4 = 0,75.',
+  app:'laju perubahan sesaat selalu berbentuk 0/0. Limit memberi nilai sebenarnya.'},
+ c2:{t:'asym',title:'Bentuk ∞/∞',f:x=>Math.sqrt(4*x*x+1)/(3*x+2),L:2/3,xr:[1,60],yr:[0.3,0.9],xl:'x',yl:'f(x)',xn:'x',
+  cap:'Pembilang dan penyebut sama-sama membesar tanpa batas (∞/∞), tetapi perbandingannya mendekati 2/3.',
+  app:'membandingkan dua besaran yang sama-sama membesar, misalnya pendapatan dan biaya pada usaha berskala sangat besar.'},
+ c3:{t:'asym',title:'Bentuk 0 · ∞',f:x=>x*Math.sin(2/x),L:2,xr:[1,60],yr:[0.5,2.2],xl:'x',yl:'x · sin(2/x)',xn:'x',
+  cap:'Faktor x membesar, sedangkan sin(2/x) mengecil. Hasil kalinya mendekati 2.',
+  app:'getaran teredam: ada faktor yang membesar dikalikan faktor yang mengecil.'},
+ c4:{t:'asym',title:'Bentuk ∞ − ∞',f:x=>Math.sqrt(x*x+4*x)-x,L:2,xr:[1,60],yr:[1,2.2],xl:'x',yl:'√(x²+4x) − x',xn:'x',
+  cap:'Selisih dua nilai besar, √(x² + 4x) dan x. Selisihnya tidak membesar, tetapi mendekati 2.',
+  app:'selisih panjang dua kabel yang sama-sama sangat panjang dan hampir sama.'},
+ d1:{t:'sec',title:'Dari garis sekan ke garis singgung',f:x=>x*x,x0:1,L:2,xr:[0,3.2],yr:[-0.5,10.5],xl:'t (detik)',yl:'s (meter)',
+  cap:'Garis sekan (oranye) melalui dua titik yang makin berdekatan. Saat h → 0 garis sekan menjadi garis singgung (hijau putus-putus), dan kemiringannya adalah turunan.',
+  app:'jarak s(t) = t². Kecepatan rata-rata pada selang yang makin pendek mendekati kecepatan sesaat 2 m/s pada t = 1 detik.'}
+};
+const vizHtml=id=>{const v=VIZ[id];if(!v)return '';
+ return `<div class="viz"><div class="vt">🎬 Visualisasi bergerak · <b>${v.title}</b></div><canvas></canvas>
+ <div class="vc"><button class="btn vp" type="button">⏸ Jeda</button><input type="range" class="vsl" min="0" max="1000" value="0" aria-label="geser animasi"><span class="vl">${v.t==='pend'?'amplitudo':'mendekat'}</span></div>
+ <div class="vr"></div><div class="vd">${v.cap}<br><b>🔧 Terapan:</b> ${v.app}</div></div>`;};
+
+function frame(ctx,W,H,xr,yr,xl,yl){
+ const m={l:50,r:14,t:12,b:36},iw=W-m.l-m.r,ih=H-m.t-m.b;
+ const X=x=>m.l+(x-xr[0])/(xr[1]-xr[0])*iw,Y=y=>m.t+ih-(y-yr[0])/(yr[1]-yr[0])*ih;
+ const tk=(a,b,n)=>{const raw=(b-a)/n,mag=Math.pow(10,Math.floor(Math.log10(raw))),r=raw/mag,s=(r<1.5?1:r<3?2:r<7?5:10)*mag,o=[];for(let v=Math.ceil(a/s)*s;v<=b+s*1e-6;v+=s)o.push(+v.toPrecision(12));return o;};
+ ctx.clearRect(0,0,W,H);ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.font='11px Nunito,sans-serif';ctx.lineWidth=1;
+ ctx.textAlign='center';ctx.textBaseline='top';
+ tk(xr[0],xr[1],Math.max(3,Math.floor(iw/80))).forEach(v=>{const x=X(v);ctx.strokeStyle='#eef2f3';ctx.beginPath();ctx.moveTo(x,m.t);ctx.lineTo(x,m.t+ih);ctx.stroke();ctx.fillStyle='#64748b';ctx.fillText(fmtn(v),x,m.t+ih+5);});
+ ctx.textAlign='right';ctx.textBaseline='middle';
+ tk(yr[0],yr[1],Math.max(3,Math.floor(ih/42))).forEach(v=>{const y=Y(v);ctx.strokeStyle='#eef2f3';ctx.beginPath();ctx.moveTo(m.l,y);ctx.lineTo(m.l+iw,y);ctx.stroke();ctx.fillStyle='#64748b';ctx.fillText(fmtn(v),m.l-6,y);});
+ ctx.strokeStyle='#94a3b8';ctx.lineWidth=1.3;
+ if(xr[0]<0&&xr[1]>0){ctx.beginPath();ctx.moveTo(X(0),m.t);ctx.lineTo(X(0),m.t+ih);ctx.stroke();}
+ if(yr[0]<0&&yr[1]>0){ctx.beginPath();ctx.moveTo(m.l,Y(0));ctx.lineTo(m.l+iw,Y(0));ctx.stroke();}
+ ctx.strokeStyle='#cbd5e1';ctx.lineWidth=1;ctx.strokeRect(m.l,m.t,iw,ih);
+ ctx.fillStyle='#334155';ctx.font='bold 11px Nunito,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(xl,m.l+iw/2,H-2);
+ ctx.save();ctx.translate(11,m.t+ih/2);ctx.rotate(-Math.PI/2);ctx.textBaseline='middle';ctx.fillText(yl,0,0);ctx.restore();
+ return {X,Y,m,iw,ih,clip(){ctx.save();ctx.beginPath();ctx.rect(m.l,m.t,iw,ih);ctx.clip();}};
+}
+function curve(ctx,f,X,Y,xr,yr,col,lw=2.6,N=420){
+ ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=lw;let pen=false;const sp=yr[1]-yr[0];
+ for(let i=0;i<=N;i++){const x=xr[0]+(xr[1]-xr[0])*i/N,y=f(x);
+  if(!isFinite(y)||y<yr[0]-sp||y>yr[1]+sp){pen=false;continue;}
+  pen?ctx.lineTo(X(x),Y(y)):ctx.moveTo(X(x),Y(y));pen=true;}
+ ctx.stroke();
+}
+const ln=(ctx,x1,y1,x2,y2,col,w=1,dash=[])=>{ctx.beginPath();ctx.setLineDash(dash);ctx.strokeStyle=col;ctx.lineWidth=w;ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);};
+const dot=(ctx,x,y,r,fill,stroke)=>{ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.lineWidth=2.2;ctx.strokeStyle=stroke;ctx.stroke();}};
+
+const DRAW={
+ limit(ctx,W,H,c,p,rd){
+  const g=frame(ctx,W,H,c.xr,c.yr,'x','f(x)'),span=Math.min(c.at-c.xr[0],c.xr[1]-c.at),d=span*0.9*Math.pow(0.001,p),bot=g.m.t+g.ih;
+  g.clip();
+  ln(ctx,g.X(c.at),g.m.t,g.X(c.at),bot,'#94a3b8',1,[4,4]);
+  c.fs.forEach(s=>{ln(ctx,g.m.l,g.Y(s.L),g.m.l+g.iw,g.Y(s.L),s.col+'77',1.3,[6,5]);curve(ctx,s.f,g.X,g.Y,c.xr,c.yr,s.col);});
+  c.fs.forEach(s=>{
+   [-1,1].forEach(k=>{const x=c.at+k*d,y=s.f(x);ln(ctx,g.X(x),bot,g.X(x),g.Y(y),s.col+'99',1,[3,3]);dot(ctx,g.X(x),g.Y(y),5.5,k<0?'#fff':s.col,s.col);});
+   s.hole?dot(ctx,g.X(c.at),g.Y(s.L),5,'#fff',s.col):dot(ctx,g.X(c.at),g.Y(s.L),4,s.col);
+  });
+  ctx.restore();
+  rd.innerHTML=`jarak ke x = ${fmtn(c.at)} : <b>${fmtn(d)}</b><br>`+c.fs.map(s=>`<span style="color:${s.col==='#0f766e'?'#5eead4':s.col}">●</span> ${s.n}: kiri = <b>${fmtn(s.f(c.at-d))}</b> · kanan = <b>${fmtn(s.f(c.at+d))}</b> → limit ${fmtn(s.L)}`).join('<br>');
+ },
+ zoom(ctx,W,H,c,p,rd){
+  const w=3*Math.pow(0.0005,p),h=w*(H-48)/(W-64),xr=[c.at-w,c.at+w],yr=[c.L-h,c.L+h];
+  const g=frame(ctx,W,H,xr,yr,'x','f(x)');
+  g.clip();curve(ctx,c.f,g.X,g.Y,xr,yr,cB,3,300);ctx.restore();
+  dot(ctx,g.X(c.at),g.Y(c.L),6,'#fff',cO);
+  rd.innerHTML=`perbesaran ×${Math.round(3/w).toLocaleString('id-ID')} · jendela: x = ${fmtn(c.at)} ± ${fmtn(w)}<br>titik bolong tetap di (${fmtn(c.at)}, ${fmtn(c.L)})`;
+ },
+ asym(ctx,W,H,c,p,rd){
+  const x=c.xr[0]+(c.xr[1]-c.xr[0])*Math.pow(p,2.2),y=c.f(x),g=frame(ctx,W,H,c.xr,c.yr,c.xl,c.yl);
+  g.clip();
+  ln(ctx,g.m.l,g.Y(c.L),g.m.l+g.iw,g.Y(c.L),cO,1.6,[7,5]);
+  curve(ctx,c.f,g.X,g.Y,c.xr,c.yr,cB);
+  ln(ctx,g.X(x),g.m.t+g.ih,g.X(x),g.Y(y),cB+'99',1,[3,3]);
+  ctx.restore();
+  ctx.fillStyle=cO;ctx.font='bold 11px Nunito,sans-serif';ctx.textAlign='right';ctx.textBaseline='bottom';ctx.fillText('y = '+fmtn(+c.L.toFixed(4)),g.m.l+g.iw-6,g.Y(c.L)-4);
+  dot(ctx,g.X(x),g.Y(y),6,cB,'#fff');
+  rd.innerHTML=`${c.xn} = <b>${fmtn(x)}</b> → f = <b>${fmtn(y)}</b><br>selisih dari ${fmtn(+c.L.toFixed(4))} : <b>${fmtn(Math.abs(y-c.L))}</b>`;
+ },
+ pend(ctx,W,H,c,p,rd,t){
+  ctx.clearRect(0,0,W,H);ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  const th0=(5+55*p)*Math.PI/180,th=th0*Math.cos(2.6*t),px=W*0.4,py=20,Lr=Math.min(H-60,W*0.5,230),rest=py+Lr;
+  const bx=px+Lr*Math.sin(th),by=py+Lr*Math.cos(th),ex=px+Lr*Math.sin(th0),ey=py+Lr*Math.cos(th0);
+  ln(ctx,px-40,py,px+40,py,'#64748b',4);
+  ln(ctx,px,py,px,rest+14,'#cbd5e1',1,[5,5]);
+  ctx.beginPath();ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1.5;ctx.arc(px,py,Lr,Math.PI/2-th0,Math.PI/2+th0);ctx.stroke();
+  const gx=Math.min(W-34,px+Lr*Math.sin(th0)+40);
+  ln(ctx,px-Lr*0.35,rest,gx,rest,'#94a3b8',1,[4,4]);
+  ln(ctx,bx,by,gx,by,cO,1.3,[4,4]);
+  ln(ctx,gx,rest,gx,by,cO,3);
+  ctx.fillStyle=cO;ctx.font='bold 13px Nunito,sans-serif';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('h',gx+6,(rest+by)/2);
+  ln(ctx,px,py,bx,by,'#334155',2.5);dot(ctx,bx,by,13,cB,'#fff');dot(ctx,px,py,4,'#334155');
+  ctx.fillStyle='#334155';ctx.font='bold 12px Nunito,sans-serif';ctx.textAlign='center';ctx.textBaseline='top';ctx.fillText('θ',px+Math.sin(th/2+0.0001)*38+(th<0?-6:6),py+34);
+  const deg=th0*180/Math.PI,ex1=100*(1-Math.cos(th0)),ap=100*th0*th0/2,ratio=(1-Math.cos(th0))/(th0*th0);
+  rd.innerHTML=`amplitudo θ = <b>${fmtn(+deg.toFixed(1))}°</b> (tali ℓ = 100 cm)<br>h eksak = ℓ(1 − cos θ) = <b>${fmtn(+ex1.toFixed(3))}</b> cm · h ≈ ℓθ²/2 = <b>${fmtn(+ap.toFixed(3))}</b> cm<br>(1 − cos θ)/θ² = <b>${ratio.toFixed(4)}</b> → limit 0,5`;
+ },
+ sec(ctx,W,H,c,p,rd){
+  const h=2*Math.pow(0.003,p),y0=c.f(c.x0),y1=c.f(c.x0+h),m=(y1-y0)/h,g=frame(ctx,W,H,c.xr,c.yr,c.xl,c.yl);
+  g.clip();
+  curve(ctx,c.f,g.X,g.Y,c.xr,c.yr,cB);
+  const line=(s,col,w,d)=>ln(ctx,g.X(c.xr[0]),g.Y(y0+s*(c.xr[0]-c.x0)),g.X(c.xr[1]),g.Y(y0+s*(c.xr[1]-c.x0)),col,w,d);
+  line(c.L,cG,1.6,[7,5]);line(m,cO,2.2,[]);
+  ctx.restore();
+  dot(ctx,g.X(c.x0),g.Y(y0),6,cB,'#fff');dot(ctx,g.X(c.x0+h),g.Y(y1),5.5,cO,'#fff');
+  rd.innerHTML=`h = <b>${fmtn(h)}</b><br>kemiringan sekan = [f(1 + h) − f(1)]/h = <b>${fmtn(m)}</b> → turunan f′(1) = ${c.L}`;
+ }
+};
+function initViz(id){
+ cancelAnimationFrame(window.__vr||0);window.__vz=null;
+ const cfg=VIZ[id],el=document.querySelector('.viz');if(!cfg||!el)return;
+ const cv=el.querySelector('canvas'),ctx=cv.getContext('2d'),bt=el.querySelector('.vp'),sl=el.querySelector('.vsl'),rd=el.querySelector('.vr');
+ let W=600,H=260,p=cfg.t==='pend'?0.6:0,play=true,hold=0,last=0,time=0;
+ const size=()=>{W=cv.clientWidth||600;H=Math.round(Math.max(230,Math.min(340,W*0.56)));const d=window.devicePixelRatio||1;cv.width=W*d;cv.height=H*d;cv.style.height=H+'px';ctx.setTransform(d,0,0,d,0,0);};
+ window.__vz=size;size();
+ bt.onclick=()=>{play=!play;bt.textContent=play?'⏸ Jeda':'▶ Putar';};
+ sl.oninput=()=>{p=sl.value/1000;hold=0;if(cfg.t!=='pend'){play=false;bt.textContent='▶ Putar';}};
+ const tick=ts=>{
+  if(!cv.isConnected)return;
+  const dt=Math.min(0.05,last?(ts-last)/1000:0);last=ts;
+  if(cfg.t==='pend'){if(play)time+=dt;}
+  else if(play){if(p>=1){hold-=dt;if(hold<=0)p=0;}else{p=Math.min(1,p+dt/7);if(p>=1)hold=1.6;}}
+  sl.value=Math.round(p*1000);
+  DRAW[cfg.t](ctx,W,H,cfg,p,rd,time);
+  window.__vr=requestAnimationFrame(tick);
+ };
+ window.__vr=requestAnimationFrame(tick);
+}
+window.addEventListener('resize',()=>{if(window.__vz)window.__vz();});
+
+const CTX={a1:'Kecepatan sesaat pada speedometer: mobil tidak "berhenti" di satu waktu, tetapi kecepatannya didekati dari pengukuran jarak pada selang waktu yang makin singkat.',
+a2:'Seperti menghitung total biaya dari biaya tetap dan biaya per unit: limit dari penjumlahan sama dengan jumlah limit tiap bagiannya.',
+a3:'Bentuk "0/0" sering muncul saat menghitung laju atau rata-rata. Faktorisasi dan sekawan membantu mengungkap nilai sebenarnya.',
+a4:'Teh panas yang didiamkan lama akan mendekati suhu ruangan: nilainya makin dekat ke angka tertentu tanpa melewatinya.',
+a5:'Biaya rata-rata per produk (biaya tetap dibagi jumlah produk) makin kecil ketika produksi sangat besar.',
+a6:'Pertumbuhan bakteri atau pengguna aplikasi pada ruang terbatas mendekati nilai maksimum tertentu, bukan naik tanpa batas.',
+b1:'Gelombang suara dan sinyal radio dimodelkan dengan fungsi sinus. Limit sin x/x dipakai dalam pemrosesan sinyal.',
+b2:'Pada ayunan bandul dengan simpangan kecil, 1 − cos x dapat didekati dengan x²/2 sehingga perhitungan energi menjadi sederhana.',
+b3:'Kemiringan atap atau tangga: untuk sudut yang sangat kecil (dalam radian), nilai tan x hampir sama dengan x.',
+c1:'Laju perubahan sesaat sering berbentuk 0/0 karena selisih nilai dan selisih waktunya sama-sama menuju nol.',
+c2:'Membandingkan dua pertumbuhan yang sama-sama besar, misalnya pendapatan terhadap biaya ketika usaha berkembang sangat besar.',
+c3:'Pada getaran yang meredam, ada faktor yang membesar dikalikan faktor yang mengecil. Hasilnya bisa dihitung dengan limit.',
+c4:'Selisih dua nilai yang sama-sama sangat besar, misalnya selisih panjang dua kabel yang hampir sama panjangnya.',
+d1:'Turunan adalah laju perubahan sesaat: kecepatan kendaraan, laju pertumbuhan penduduk, atau perubahan harga saham.',
+ex:'Berlatihlah seperti saat ujian: kerjakan dulu di buku catatan, baru buka langkah penyelesaiannya.'};
+const ctxHtml=id=>CTX[id]?`<div class="ctx">💡 <b>Dalam kehidupan nyata:</b> ${CTX[id]}</div>`:'';
+function go(i){
+  cur=i; visited.add(i);
+  const it=items[i], v=document.getElementById('view');
+  v.classList.remove('fade');void v.offsetWidth;v.classList.add('fade');
+  let body='';
+  if(it.id==='ex') body=renderEx();
+  else if(it.id==='qz') body=renderQz();
+  else body=S.find(s=>s.id===it.id).h;
+  v.innerHTML=`<span class="tag">${it.g}</span><h2>${it.t}</h2>${ctxHtml(it.id)}${vizHtml(it.id)}${body}
+   <div class="nav"><button class="btn alt" ${i==0?'disabled':''} onclick="go(${i-1})">← Sebelumnya</button>
+   <button class="btn" ${i==items.length-1?'disabled':''} onclick="go(${i+1})">Berikutnya →</button></div>`;
+  document.querySelectorAll('#side a').forEach(a=>a.classList.toggle('on',+a.dataset.i===i));
+  document.querySelector('#bar i').style.width=(visited.size/items.length*100)+'%';
+  document.getElementById('side').classList.remove('open');document.getElementById('ov').classList.remove('open');
+  window.scrollTo({top:0});
+  initViz(it.id);
+  typeset();
+}
+
+/* --- Soal Diselesaikan --- */
+function renderEx(){
+  return '<p>Coba kerjakan dahulu di buku catatanmu, lalu tekan tombol untuk melihat langkah penyelesaian.</p>'+
+  EX.map((e,i)=>`<div class="q"><b>Soal ${i+1}.</b> ${e.q}
+   <div><button class="btn warn" id="tb${i}" onclick="togSol(${i})">Tampilkan Langkah Penyelesaian</button></div>
+   <div class="sol" id="sol${i}">${e.s}</div></div>`).join('');
+}
+function togSol(i){
+  const s=document.getElementById('sol'+i), b=document.getElementById('tb'+i);
+  const show=s.classList.toggle('show');
+  b.textContent=show?'Sembunyikan Langkah Penyelesaian':'Tampilkan Langkah Penyelesaian';
+  if(show) typeset();
+}
+
+/* Deteksi perangkat otomatis: mobile / tablet / PC */
+function setDev(){
+ const w=window.innerWidth, d=w<=860?'mobile':(w<=1180?'tablet':'desktop');
+ document.documentElement.dataset.dev=d;
+ if(d!=='mobile'){document.getElementById('side').classList.remove('open');document.getElementById('ov').classList.remove('open');}
+}
+window.addEventListener('resize',setDev);window.addEventListener('orientationchange',setDev);setDev();
+/* Logo dari Google Drive */
+const LOGO_THUMB='https://drive.google.com/thumbnail?id=1d698Ummdjz0mjcv4LZ6UUw-Vm7wwhoau&sz=w300';
+let logoTried=false;
+function applyLogo(src){
+ document.querySelectorAll('.lgimg').forEach(i=>{i.src=src;i.style.display='';});
+ document.querySelectorAll('.lgfb').forEach(e=>e.style.display='none');
+}
+function logoFail(){
+ if(!logoTried){logoTried=true;applyLogo(LOGO_THUMB);return;}
+ document.querySelectorAll('.lgimg').forEach(i=>i.style.display='none');
+ document.querySelectorAll('.lgfb').forEach(e=>e.style.display='');
+}
+function loadLogo(){
+ if(window.google&&google.script&&google.script.run){
+  google.script.run.withSuccessHandler(d=>{if(d){logoTried=false;applyLogo(d);}else{logoTried=true;applyLogo(LOGO_THUMB);}})
+   .withFailureHandler(()=>{logoTried=true;applyLogo(LOGO_THUMB);}).getLogoData();
+ } else {logoTried=true;applyLogo(LOGO_THUMB);}
+}
+document.getElementById('yr').textContent=new Date().getFullYear();
+buildSide(); loadLogo(); go(0);
+</script>
+</body>
+</html>
